@@ -19,5 +19,6 @@ m4/
 Makefile
 Makefile.in
 missing
+mpc_plugin
 mpc_start_stop
 stamp-h1
