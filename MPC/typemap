@@ -1,0 +1,3 @@
+TYPEMAP
+pgmpc*	T_PTROBJ
+MPC	T_PTROBJ

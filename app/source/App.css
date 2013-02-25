@@ -1,0 +1,14 @@
+.volumeSlider {width: 20%; margin-right: 5px}
+
+.playing {background-color: #E8E8E8}
+
+.error {background-color: red}
+
+.progress {margin-top: 10px}
+
+img.aboutImage {margin-right: 20px}
+
+div.aboutTitle {font-size: larger; font-weight: bold}
+div.aboutCopyright {margin: 15px}
+div.licenseInfo {font-size: smaller; margin: 15px}
+

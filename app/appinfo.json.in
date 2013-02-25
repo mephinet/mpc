@@ -1,0 +1,20 @@
+{
+    "id": "org.gortan.mpc",
+    "version": "@VERSION@",
+    "vendor": "Philipp Gortan",
+    "vendorurl": "http://gortan.org/",
+    "type": "web",
+    "main": "index.html",
+    "title": "Music Player Client",
+    "copyright": "Copyright 2013, Philipp Gortan.",
+    "icon": "images/icon_64x64.png",
+    "uiRevision":2,
+    "plug-ins": true,
+    "support": {
+        "url": "http://mpc.gortan.org/",
+        "email": {
+            "subject": "support request",
+            "address": "gortan@gmail.com"
+        }
+    }
+}

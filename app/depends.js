@@ -1,0 +1,12 @@
+enyo.depends(
+    "source/App.js",
+    "source/MainView.js",
+    "source/Plugin.js",
+    "source/Controls.js",
+    "source/VirtualList.js",
+    "source/Queue.js",
+    "source/Playlists.js",
+    "source/Prefs.js",
+    "source/About.js",
+    "source/App.css"
+);
