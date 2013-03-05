@@ -7,7 +7,7 @@ enyo.kind({
     className: "enyo-popup mpc-about",
 
     components: [
-        {kind: enyo.HFlexBox, components: [
+        {kind: enyo.HFlexBox, pack: "center", components: [
             {kind: enyo.Image, className: "icon", src: "images/icon_64x64.png"},
             {kind: enyo.VFlexBox, components: [
                 {name: "title", className: "title"},
