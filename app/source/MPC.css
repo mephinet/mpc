@@ -6,9 +6,10 @@
 
 .progress {margin-top: 10px}
 
-img.aboutImage {margin-right: 20px}
-
-div.aboutTitle {font-size: larger; font-weight: bold}
-div.aboutCopyright {margin: 15px}
-div.licenseInfo {font-size: smaller; margin: 15px}
+.aboutPopup {width: 50%}
+.aboutPopup .icon {margin-right: 20px}
+.aboutPopup .title {font-size: larger; font-weight: bold}
+.aboutPopup .copyright {margin: 15px}
+.aboutPopup .info {margin: 15px}
+.aboutPopup .licenseInfo {font-size: smaller; margin: 15px; text-align: justify}
 
