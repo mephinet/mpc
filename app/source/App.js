@@ -45,6 +45,7 @@ enyo.kind({
         var host = this.$.prefs.getHost();
         var port = this.$.prefs.getPort();
         this.log("connect data loaded: " + host + ":" + port);
+        enyo.scrim.show();
         this.$.plugin.connect(host, port);
     },
 
@@ -63,6 +64,7 @@ enyo.kind({
         var host = this.$.prefs.getHost();
         var port = this.$.prefs.getPort();
         this.log("New connect data: " + host + ":" + port);
+        enyo.scrim.show();
         this.$.plugin.connect(host, port);
     },
 
@@ -83,6 +85,7 @@ enyo.kind({
 
     loadPlaylist: function (sender, playlist) {
         this.log(playlist);
+        enyo.scrim.show();
         this.$.plugin.loadPlaylist(playlist);
     },
 
@@ -107,10 +110,12 @@ enyo.kind({
     },
 
     updateStatus: function (sender, status) {
+        enyo.scrim.hide();
         this.$.mainView.updateStatus(status);
     },
 
     updateStatusWithError: function (sender, error) {
+        enyo.scrim.hide();
         this.$.mainView.updateStatusWithError(error);
     },
 
