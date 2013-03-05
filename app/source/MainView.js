@@ -22,7 +22,7 @@ enyo.kind({
     },
 
     components: [
-        {name: "menu", width: '320px', components: [
+        {name: "left", width: '320px', components: [
             {kind: enyo.Group, defaultKind: enyo.Item, components: [
                 {name: "queueButton", className: "enyo-item-selected", content: $L("Queue"), onclick: "showQueue"},
                 {name: "playlistsButton", content: $L("Manage Playlists"), onclick: "showPlaylists"}
@@ -40,19 +40,8 @@ enyo.kind({
             ]},
             {kind: enyo.Toolbar}
         ]},
-        {name: "main", components: [
-            {kind: enyo.PageHeader, name: "statusHeader", components: [
-                {kind: enyo.VFlexBox, flex: 1, components: [
-                    {kind: enyo.HFlexBox, components: [
-                        {name: "currentStatus", className: "status", content: ""},
-                        {kind: enyo.Spacer},
-                        {kind: enyo.Button, name: "reconnectButton", label: $L("Reconnect"),
-                         onclick: "doReconnect", showing: false}
-                    ]},
-                    {name: "progress", className: "progress", kind: enyo.ProgressBar}
-                ]}
-
-            ]},
+        {name: "right", components: [
+            {kind: "MPC.StatusHeader", onReconnect: "doReconnect"},
             {name: "mainPane", kind: enyo.Pane, flex: 1, onSelectView: "mainPaneSelected", components: [
                 {kind: "MPC.Queue", flex: 1, onPlay: "doPlayById"},
                 {kind: "MPC.Playlists", flex: 1, onLoad: "loadPlaylist"}
@@ -75,8 +64,8 @@ enyo.kind({
             }
             this.$.queue.setData(p);
             this.$.playlists.setData([{path: "foo"}, {path: "bar"}, {path: "baz"}]);
-            this.$.currentStatus.setContent("Current Artist - Current Song");
-            this.$.progress.setPositionImmediate(80);
+            this.$.statusHeader.setStatus("Current Artist - Current Song");
+            this.$.statusHeader.setProgress(80);
         }
     },
 
@@ -104,11 +93,10 @@ enyo.kind({
         } else {
             s = status.filename;
         }
-        this.$.statusHeader.removeClass("error");
-        this.$.currentStatus.setContent(s);
+        this.$.statusHeader.setError(0);
+        this.$.statusHeader.setStatus(s);
         this.$.random.setState(!!status.random);
         this.$.repeat.setState(!!status.repeat);
-        this.$.reconnectButton.hide();
 
         if (status.state && (status.state === "play") && (s !== this.lastSong)) {
             this.doNewSong(s);
@@ -116,20 +104,19 @@ enyo.kind({
         }
 
         if (status.total_time && status.total_time > 0) {
-            this.$.progress.setPosition(status.elapsed_time / status.total_time * 100);
+            this.$.statusHeader.setProgress(status.elapsed_time / status.total_time * 100);
         } else {
-            this.$.progress.setPositionImmediate(0);
+            this.$.statusHeader.clearProgress();
         }
     },
 
     updateStatusWithError: function (error) {
-        this.$.statusHeader.addClass("error");
-        this.$.currentStatus.setContent($L(error));
-        this.$.reconnectButton.show();
+        this.$.statusHeader.setError(1);
+        this.$.statusHeader.setStatus($L(error));
     },
 
     stop: function () {
-        this.$.progress.setPositionImmediate(0);
+        this.$.statusHeader.clearProgress();
         this.doStop();
     },
 

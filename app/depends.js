@@ -1,6 +1,7 @@
 enyo.depends(
     "source/App.js",
     "source/MainView.js",
+    "source/StatusHeader.js",
     "source/Plugin.js",
     "source/Controls.js",
     "source/VirtualList.js",

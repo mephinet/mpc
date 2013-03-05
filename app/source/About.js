@@ -1,4 +1,4 @@
-/*jslint vars: true */
+/*jslint onevar: false */
 /*global enyo, $L */
 
 enyo.kind({

@@ -1,5 +1,5 @@
 /*global enyo, $L, close */
-/*jlint vars: false */ 
+/*jslint onevar: false */
 
 enyo.kind({
     name: "MPC.App",

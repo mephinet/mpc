@@ -51,7 +51,7 @@ enyo.kind({
         }
     ],
 
-    rendered: function() {
+    rendered: function () {
         this.inherited(arguments);
         var info = enyo.fetchAppInfo();
         this.$.toolbarImage.setSrc(info.icon);
