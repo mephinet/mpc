@@ -4,7 +4,7 @@
 enyo.kind({
     name: "MPC.About",
     kind: enyo.Popup,
-    className: "enyo-popup aboutPopup",
+    className: "enyo-popup mpc-about",
 
     components: [
         {kind: enyo.HFlexBox, components: [
@@ -23,7 +23,6 @@ enyo.kind({
         this.inherited(arguments);
 
         var info = enyo.fetchAppInfo();
-        this.log(enyo.json.stringify(info));
         var url = info.support.url;
         this.$.title.setContent(info.title + " " + info.version);
         this.$.copyright.setContent(info.copyright);

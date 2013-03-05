@@ -6,10 +6,12 @@
 
 .progress {margin-top: 10px}
 
-.aboutPopup {width: 50%}
-.aboutPopup .icon {margin-right: 20px}
-.aboutPopup .title {font-size: larger; font-weight: bold}
-.aboutPopup .copyright {margin: 15px}
-.aboutPopup .info {margin: 15px}
-.aboutPopup .licenseInfo {font-size: smaller; margin: 15px; text-align: justify}
+.mpc-about {width: 50%}
+.mpc-about .icon {margin-right: 20px}
+.mpc-about .title {font-size: larger; font-weight: bold}
+.mpc-about .copyright {margin: 15px}
+.mpc-about .info {margin: 15px}
+.mpc-about .licenseInfo {font-size: smaller; margin: 15px; text-align: justify}
 
+.mpc-prefs .saveButton {width: 300px}
+.mpc-prefs .box-center {width: 500px; margin: 23px auto 0}

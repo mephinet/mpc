@@ -2,6 +2,7 @@
 enyo.kind({
     name: "MPC.Prefs",
     kind: enyo.VFlexBox,
+    className: "mpc-prefs enyo-bg",
 
     events: {
         onLoaded: "",
@@ -14,20 +15,25 @@ enyo.kind({
     },
 
     components: [
-        {kind: enyo.RowGroup, caption: $L("Hostname or IP Address"), components: [
-            {name: "host", kind: enyo.Input}
+        {kind: enyo.Toolbar, className: "enyo-toolbar-light", pack: "center", components: [
+            {kind: enyo.Image, name: "toolbarImage"},
+            {kind: enyo.Control, content: $L("Preferences")}
+        ]},
+        {kind: enyo.Scroller, flex: 1, components: [
+            {kind: enyo.Control, className: "box-center", components: [
+                {kind: enyo.RowGroup, caption: $L("Hostname or IP Address"), components: [
+                    {name: "host", kind: enyo.Input}
+                ]},
+
+                {kind: enyo.RowGroup, caption: $L("Port"), components: [
+                    {name: "port", kind: enyo.Input, autoKeyModifier: "num-lock", value: 6600}
+                ]}
+            ]}
         ]},
 
-        {kind: enyo.RowGroup, caption: $L("Port"), components: [
-            {name: "port", kind: enyo.Input, autoKeyModifier: "num-lock", value: 6600}
-        ]},
-
-        {kind: enyo.Spacer},
-
-        {kind: enyo.ToolBar, components: [
-            {name: "saveButton", kind: enyo.Button,
-             style: "width: 300px",
-             className: "enyo-button-affirmative",
+        {kind: enyo.ToolBar, layoutKind: "HFlexLayout", className: "enyo-toolbar-light", pack: "center", components: [
+            {name: "saveButton", kind: enyo.Button, 
+             className: "saveButton enyo-button-affirmative",
              content: $L("Done"), onclick: "saveClick"}
         ]},
 
@@ -44,6 +50,12 @@ enyo.kind({
          onFailure: "prefsError"
         }
     ],
+
+    rendered: function() {
+        this.inherited(arguments);
+        var info = enyo.fetchAppInfo();
+        this.$.toolbarImage.setSrc(info.icon);
+    },
 
     loadPrefs: function () {
         this.$.getPreferencesCall.call({keys: ["host", "port"]});
