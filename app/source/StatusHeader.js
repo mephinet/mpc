@@ -5,8 +5,6 @@ enyo.kind({
     className: "enyo-header mpc-status-header",
 
     published: {
-        status: "",
-        error: false,
         progress: 0
     },
 
@@ -26,14 +24,19 @@ enyo.kind({
         ]}
     ],
 
-    statusChanged: function () {
-        this.$.currentStatus.setContent(this.status);
+    setStatus: function (s) {
+        this.setStatusError(s, 0);
+    },
+    
+    setError: function (s) {
+        this.setStatusError(s, 1);
     },
 
-    errorChanged: function () {
-        this.addRemoveClass("error", this.error);
-        this.$.reconnectButton.setShowing(this.error);
-        this.$.progress.setShowing(!this.error);
+    setStatusError: function (s, error) {
+        this.$.currentStatus.setContent(s);
+        this.addRemoveClass("error", error);
+        this.$.reconnectButton.setShowing(error);
+        this.$.progress.setShowing(!error);
     },
 
     progressChanged: function () {

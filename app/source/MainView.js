@@ -93,7 +93,6 @@ enyo.kind({
         } else {
             s = status.filename;
         }
-        this.$.statusHeader.setError(0);
         this.$.statusHeader.setStatus(s);
         this.$.random.setState(!!status.random);
         this.$.repeat.setState(!!status.repeat);
@@ -111,8 +110,7 @@ enyo.kind({
     },
 
     updateStatusWithError: function (error) {
-        this.$.statusHeader.setError(1);
-        this.$.statusHeader.setStatus($L(error));
+        this.$.statusHeader.setError($L(error));
     },
 
     stop: function () {
