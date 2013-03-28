@@ -9,5 +9,7 @@ enyo.depends(
     "source/Playlists.js",
     "source/Prefs.js",
     "source/About.js",
+    "source/SleepSettings.js",
+    "source/Alarm.js",
     "source/MPC.css"
 );

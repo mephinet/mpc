@@ -11,7 +11,7 @@ enyo.kind({
              onRandomChanged: "randomChanged", onRepeatChanged: "repeatChanged",
              onReconnect: "reconnect", onLoadPlaylist: "loadPlaylist",
              onPlayById: "playById", onSetVolumeByApp: "setVolumeByApp",
-             onNewSong: "newSong"
+             onNewSong: "newSong", onSleepChanged: "sleepChanged"
             },
             {kind: "MPC.Prefs", onLoaded: "prefsLoaded", onSave: "prefsSaved"}
         ]},
@@ -29,7 +29,9 @@ enyo.kind({
             {caption: $L("Preferences"), onclick: "showPrefs"},
             {caption: $L("About..."), onclick: "showAbout"}
         ]},
-        {kind: "MPC.About"}
+        {kind: "MPC.About"},
+        {kind: "MPC.Alarm"},
+        {kind: enyo.ApplicationEvents, onApplicationRelaunch: "applicationRelaunchHandler"}
     ],
 
     pluginReady: function () {
@@ -150,5 +152,21 @@ enyo.kind({
     errorButtonClicked: function () {
         this.$.errorDialog.close();
         close();
+    },
+
+    sleepChanged: function (sender, minutes) {
+        if (minutes) {
+            this.$.alarm.setAlarm(minutes);
+        } else {
+            this.$.alarm.clearAlarm();
+        }
+    },
+
+    applicationRelaunchHandler: function () {
+        var params = enyo.windowParams;
+        if (params.action === "alarmWakeup") {
+            this.log("Received alarm!");
+            return true;
+        }
     }
 });

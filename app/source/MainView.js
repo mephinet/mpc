@@ -18,14 +18,16 @@ enyo.kind({
         onLoadPlaylist: "",
         onPlayById: "",
         onSetVolumeByApp: "",
-        onNewSong: ""
+        onNewSong: "",
+        onSleepChanged: ""
     },
 
     components: [
         {name: "left", width: '320px', components: [
             {kind: enyo.Group, defaultKind: enyo.Item, components: [
                 {name: "queueButton", className: "enyo-item-selected", content: $L("Queue"), onclick: "showQueue"},
-                {name: "playlistsButton", content: $L("Manage Playlists"), onclick: "showPlaylists"}
+                {name: "playlistsButton", content: $L("Manage Playlists"), onclick: "showPlaylists"},
+                {name: "sleepSettingsButton", content: $L("Sleep Settings"), onclick: "showSleepSettings"}
             ]},
             {kind: enyo.Spacer},
             {kind: enyo.Group, components: [
@@ -44,7 +46,8 @@ enyo.kind({
             {kind: "MPC.StatusHeader", onReconnect: "doReconnect"},
             {name: "mainPane", kind: enyo.Pane, flex: 1, onSelectView: "mainPaneSelected", components: [
                 {kind: "MPC.Queue", flex: 1, onPlay: "doPlayById"},
-                {kind: "MPC.Playlists", flex: 1, onLoad: "loadPlaylist"}
+                {kind: "MPC.Playlists", flex: 1, onLoad: "loadPlaylist"},
+                {kind: "MPC.SleepSettings", flex: 1, onSleepChanged: "doSleepChanged"}
             ]},
             {kind: "MPC.Controls", onPlay: "doPlay", onPause: "doPause", onStop: "stop", onNext: "doNext",
              onVolumeChanged: "doSetVolumeByApp"}
@@ -75,6 +78,10 @@ enyo.kind({
 
     showPlaylists: function () {
         this.$.mainPane.selectViewByName("playlists");
+    },
+
+    showSleepSettings: function () {
+        this.$.mainPane.selectViewByName("sleepSettings");
     },
 
     mainPaneSelected: function (sender, newView, oldView) {
