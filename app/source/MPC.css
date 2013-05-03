@@ -17,3 +17,14 @@
 .mpc-prefs .box-center {width: 500px; margin: 23px auto 0}
 
 .mpc-status-header {height: 76px}
+
+.search {
+    width: 200px;
+}
+
+.search .close {
+	background:url(../images/btn_search_close.png) no-repeat 50% 50%;
+	height:24px;
+	width:24px;
+	margin-right:-5px;
+}

@@ -11,5 +11,6 @@ enyo.depends(
     "source/About.js",
     "source/SleepSettings.js",
     "source/Alarm.js",
+    "source/SearchInput.js",
     "source/MPC.css"
 );

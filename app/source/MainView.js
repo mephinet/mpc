@@ -5,8 +5,6 @@ enyo.kind({
     name: "MPC.MainView",
     kind: enyo.SlidingPane,
 
-    flex: 1,
-
     events: {
         onPlay: "",
         onPause: "",
@@ -43,11 +41,11 @@ enyo.kind({
             {kind: enyo.Toolbar}
         ]},
         {name: "right", components: [
-            {kind: "MPC.StatusHeader", onReconnect: "doReconnect"},
+            {kind: "MPC.StatusHeader", onSearch: "search", onReconnect: "doReconnect"},
             {name: "mainPane", kind: enyo.Pane, flex: 1, onSelectView: "mainPaneSelected", components: [
-                {kind: "MPC.Queue", flex: 1, onPlay: "doPlayById"},
-                {kind: "MPC.Playlists", flex: 1, onLoad: "loadPlaylist"},
-                {kind: "MPC.SleepSettings", flex: 1, onSleepChanged: "doSleepChanged"}
+                {kind: "MPC.Queue", onPlay: "doPlayById"},
+                {kind: "MPC.Playlists", onLoad: "loadPlaylist"},
+                {kind: "MPC.SleepSettings", onSleepChanged: "doSleepChanged"}
             ]},
             {kind: "MPC.Controls", onPlay: "doPlay", onPause: "doPause", onStop: "stop", onNext: "doNext",
              onVolumeChanged: "doSetVolumeByApp"}
@@ -74,14 +72,17 @@ enyo.kind({
 
     showQueue: function () {
         this.$.mainPane.selectViewByName("queue");
+        this.$.statusHeader.showSearch(true);
     },
 
     showPlaylists: function () {
         this.$.mainPane.selectViewByName("playlists");
+        this.$.statusHeader.showSearch(false);
     },
 
     showSleepSettings: function () {
         this.$.mainPane.selectViewByName("sleepSettings");
+        this.$.statusHeader.showSearch(false);
     },
 
     mainPaneSelected: function (sender, newView, oldView) {
@@ -128,6 +129,10 @@ enyo.kind({
     loadPlaylist: function (sender, playlist) {
         this.doLoadPlaylist(playlist);
         this.showQueue();
+    },
+
+    search: function (sender, query) {
+        this.$.queue.setQuery(query);
     }
 
 });

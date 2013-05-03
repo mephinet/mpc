@@ -17,7 +17,7 @@ enyo.kind({
 
     setupRow: function (sender, index) {
         if (this.inherited(arguments)) {
-            this.$.item.addRemoveClass("playing", this.data[index].songid === this.currentSongId);
+            this.$.item.addRemoveClass("playing", this.filteredData[index].songid === this.currentSongId);
             return true;
         }
     },
@@ -31,14 +31,23 @@ enyo.kind({
 
     dataChanged: function () {
         this.inherited(arguments);
+
+        enyo.map(this.data, function (d) {
+            d.querystring = (d.artist ? d.artist.toLowerCase() : "") + (d.title ? d.title.toLowerCase() : "") + (d.filename ? d.filename.toLowerCase() : "");
+        });
+
         this.songIdMap = {};
-        for (var i = 0; i < this.data.length; i++) {
-            this.songIdMap[this.data[i].songid] = i;
+        for (var i = 0; i < this.filteredData.length; i++) {
+            this.songIdMap[this.filteredData[i].songid] = i;
         }
     },
 
+    matches: function (data) {
+        return (data.querystring.indexOf(this.query) >= 0);
+    },
+
     buttonClicked: function (sender, event) {
-        this.doPlay(this.data[this.currentlySelected].songid);
+        this.doPlay(this.filteredData[this.currentlySelected].songid);
     },
 
     currentSongIdChanged: function (oldSongId) {
