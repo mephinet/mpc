@@ -27,7 +27,8 @@ BUILDDIR=$BASE/build
 [[ -d libmpdclient ]] || git clone git://git.musicpd.org/master/libmpdclient.git/
 
 cd libmpdclient
-git checkout release-2.7
+[[ "$QUICK" ]] || git fetch
+[[ "$QUICK" ]] || git checkout release-2.8
 [[ "$QUICK" ]] || NOCONFIGURE=1 ./autogen.sh --prefix=$BUILDDIR
 cd ..
 
