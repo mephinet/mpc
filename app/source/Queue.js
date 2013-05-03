@@ -30,11 +30,11 @@ enyo.kind({
     },
 
     dataChanged: function () {
-        this.inherited(arguments);
-
         enyo.map(this.data, function (d) {
             d.querystring = (d.artist ? d.artist.toLowerCase() : "") + (d.title ? d.title.toLowerCase() : "") + (d.filename ? d.filename.toLowerCase() : "");
         });
+
+        this.inherited(arguments);
 
         this.songIdMap = {};
         for (var i = 0; i < this.filteredData.length; i++) {

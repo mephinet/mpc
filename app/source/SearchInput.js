@@ -30,10 +30,12 @@ enyo.kind({
     showInput: function () {
         this.$.button.hide();
         this.$.input.show();
+        this.$.input.forceFocus();
     },
 
     closeInput: function () {
         this.$.input.hide();
+        this.$.input.forceBlur();
         this.$.button.show();
         this.$.input.setValue("");
         this.doSearch("");
