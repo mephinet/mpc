@@ -21,8 +21,7 @@ enyo.kind({
                 {kind: enyo.Button, name: "reconnectButton", label: $L("Reconnect"),
                  onclick: "doReconnect", showing: false},
 
-		{name: "searchButton", kind: "IconButton", icon: "images/btn_search.png", onclick: "showSearchInput"},
-                {kind: "MPC.SearchInput", showing: false, onSearch: "doSearch", onClose: "closeSearchInput"}
+                {kind: "MPC.SearchInput", onSearch: "doSearch"}
             ]},
             {name: "progress", className: "progress", kind: enyo.ProgressBar}
         ]}
@@ -43,7 +42,6 @@ enyo.kind({
         this.$.progress.setShowing(!error);
         if (error) {
             this.$.searchInput.hide();
-            this.$.searchButton.hide();
         }
     },
 
@@ -55,24 +53,8 @@ enyo.kind({
         this.$.progress.setPositionImmediate(0);
     },
 
-    showSearch: function (show) {
-        if (show) {
-            this.$.searchInput.close();
-            this.$.searchButton.show();
-        } else {
-            this.$.searchInput.hide();
-            this.$.searchButton.hide();
-        }
-    },
-
-    showSearchInput: function () {
-        this.$.searchButton.hide();
-        this.$.searchInput.show();
-    },
-
-    closeSearchInput: function () {
-        this.$.searchInput.hide();
-        this.$.searchButton.show();
+    showSearch: function (showing) {
+        this.$.searchInput.setShowing(showing);
     }
 
 });

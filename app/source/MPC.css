@@ -16,13 +16,15 @@
 .mpc-prefs .saveButton {width: 300px}
 .mpc-prefs .box-center {width: 500px; margin: 23px auto 0}
 
-.mpc-status-header {height: 76px}
+.mpc-status-header {min-height: 76px}
 
-.search {
+.mpc-status-header .status {min-height: 38px}
+
+.mpc-search .input {
     width: 200px;
 }
 
-.search .close {
+.mpc-search .input .close {
 	background:url(../images/btn_search_close.png) no-repeat 50% 50%;
 	height:24px;
 	width:24px;

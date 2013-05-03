@@ -1,20 +1,23 @@
 enyo.kind({
     name: "MPC.SearchInput",
     kind: "enyo.Control",
-    className: "search",
+    className: "mpc-search",
 
     events: {
-        onClose: "",
         onSearch: "",
     },
 
     components: [
-        {name: "input", kind: "enyo.RoundedInput",
+        {name: "button", kind: "IconButton",
+         icon: "images/btn_search.png", onclick: "showInput"},
+
+        {name: "input", kind: "enyo.RoundedInput", 
+         className: "input", showing: false,
          spellcheck: false, autocorrect: false, autoWordComplete: false, 
          changeOnInput: true, keypressInputDelay: 0.5,
          onchange: "inputChanged",
          components: [
-            {kind: "enyo.Control", className: "close", onclick: "close"}
+            {kind: "enyo.Control", className: "close", onclick: "closeInput"}
         ]}
     ],
 
@@ -23,10 +26,16 @@ enyo.kind({
         this.doSearch(txt);
     },
    
-    close: function () {
-        this.doClose();
-        this.doSearch("");
+    showInput: function () {
+        this.$.button.hide();
+        this.$.input.show();
+    },
+
+    closeInput: function () {
+        this.$.input.hide();
+        this.$.button.show();
         this.$.input.setValue("");
+        this.doSearch("");
     }
     
 });
