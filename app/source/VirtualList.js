@@ -5,19 +5,19 @@ enyo.kind({
 
     published: {
         data: null,
-        query: null,
+        query: null
     },
+
     components: [
-        {name: "list", kind: enyo.VirtualList, onSetupRow: "setupRow",
-         components: [
-             {kind: enyo.Item, layoutKind: "HFlexLayout",
-              onclick: "itemTapped",
-              tapHighlight: true,
-              components: [
-                  {name: "caption", flex: 1},
-                  {kind: enyo.Button, onclick: "buttonClicked", showing: false}
-              ]}
-         ]}
+        {name: "list", kind: enyo.VirtualList, onSetupRow: "setupRow", components: [
+            {kind: enyo.Item, layoutKind: "HFlexLayout",
+             onclick: "itemTapped",
+             tapHighlight: true,
+             components: [
+                 {name: "caption", flex: 1},
+                 {kind: enyo.Button, onclick: "buttonClicked", showing: false}
+             ]}
+        ]}
     ],
 
     currentlySelected: null,

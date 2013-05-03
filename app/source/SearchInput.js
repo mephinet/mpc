@@ -1,10 +1,11 @@
+/*global enyo */
 enyo.kind({
     name: "MPC.SearchInput",
     kind: "enyo.Control",
     className: "mpc-search",
 
     events: {
-        onSearch: "",
+        onSearch: ""
     },
 
     components: [
