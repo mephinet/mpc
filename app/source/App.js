@@ -166,6 +166,8 @@ enyo.kind({
         var params = enyo.windowParams;
         if (params.action === "alarmWakeup") {
             this.log("Received alarm!");
+            this.stop();
+            this.$.mainView.resetSleep();
             return true;
         }
     }

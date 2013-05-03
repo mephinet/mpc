@@ -133,6 +133,10 @@ enyo.kind({
 
     search: function (sender, query) {
         this.$.queue.setQuery(query);
+    },
+
+    resetSleep: function () {
+        this.$.sleepSettings.resetSleep();
     }
 
 });
