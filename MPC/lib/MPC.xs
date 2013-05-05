@@ -35,6 +35,9 @@ int
 pgmpc_next(MPC this)
 
 int
+pgmpc_crop(MPC this)
+
+int
 pgmpc_stop(MPC this)
 
 int

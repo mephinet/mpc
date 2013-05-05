@@ -41,3 +41,24 @@ char* pgmpc_get_queue(pgmpc* this) {
   cJSON_Delete(result);
   return res;
 }
+
+bool pgmpc_crop (pgmpc* this) {
+  if(!pgmpc_check_and_reconnect(this)) return false;
+
+  if (this->current_songpos < 0) return false;
+
+  if(!mpd_run_delete_range(this->connection, 0, this->current_songpos)) {
+    pgmpc_error("pgmpc_crop: delete range 1 failed");
+    return false;
+  }
+
+  if (this->current_songpos < (int) this->queue_length-1) {
+    if (!mpd_run_delete_range(this->connection, 1, -1)) {
+      pgmpc_error("pgmpc_crop: delete range 2 failed");
+      return false;
+    }
+  }
+
+  return true;
+
+}

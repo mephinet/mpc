@@ -42,13 +42,15 @@ bool pgmpc_update_state(pgmpc* this) {
     return false;
   }
 
-  this->current_volume = mpd_status_get_volume(status);
-  this->current_songid = mpd_status_get_song_id(status);
-  this->queue_version  = mpd_status_get_queue_version(status);
-  this->elapsed_time   = mpd_status_get_elapsed_time(status);
-  this->total_time     = mpd_status_get_total_time(status);
-  this->random         = mpd_status_get_random(status);
-  this->repeat         = mpd_status_get_repeat(status);
+  this->current_volume  = mpd_status_get_volume(status);
+  this->current_songid  = mpd_status_get_song_id(status);
+  this->current_songpos = mpd_status_get_song_pos(status);
+  this->queue_version   = mpd_status_get_queue_version(status);
+  this->queue_length    = mpd_status_get_queue_length(status);
+  this->elapsed_time    = mpd_status_get_elapsed_time(status);
+  this->total_time      = mpd_status_get_total_time(status);
+  this->random          = mpd_status_get_random(status);
+  this->repeat          = mpd_status_get_repeat(status);
   switch (mpd_status_get_state(status)) {
   case MPD_STATE_PLAY:
     this->state = "play";

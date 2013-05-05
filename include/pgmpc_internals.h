@@ -24,7 +24,9 @@ struct pgmpc_t {
   char* state;
   int current_volume;
   int current_songid;
+  int current_songpos;
   int queue_version;
+  unsigned int queue_length;
 };
 
 #endif

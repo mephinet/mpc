@@ -17,6 +17,7 @@ bool pgmpc_play_by_id(pgmpc*, unsigned);
 bool pgmpc_pause(pgmpc*);
 bool pgmpc_stop(pgmpc*);
 bool pgmpc_next(pgmpc*);
+bool pgmpc_crop(pgmpc*);
 
 bool pgmpc_set_volume(pgmpc*, unsigned int);
 bool pgmpc_set_random(pgmpc*, bool);
