@@ -29,4 +29,6 @@ struct pgmpc_t {
   unsigned int queue_length;
 };
 
+#define RANGE_END (0x7fffffff)
+
 #endif

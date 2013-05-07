@@ -53,7 +53,7 @@ bool pgmpc_crop (pgmpc* this) {
   }
 
   if (this->current_songpos < (int) this->queue_length-1) {
-    if (!mpd_run_delete_range(this->connection, 1, -1)) {
+    if (!mpd_run_delete_range(this->connection, 1, RANGE_END)) {
       pgmpc_error("pgmpc_crop: delete range 2 failed");
       return false;
     }

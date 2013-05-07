@@ -47,8 +47,8 @@ enyo.kind({
                 {kind: "MPC.Playlists", onLoad: "loadPlaylist"},
                 {kind: "MPC.SleepSettings", onSleepChanged: "doSleepChanged"}
             ]},
-            {kind: "MPC.Controls", onPlay: "doPlay", onPause: "doPause", onStop: "stop", onNext: "doNext",
-             onVolumeChanged: "doSetVolumeByApp"}
+            {kind: "MPC.Controls", onPlay: "doPlay", onPause: "doPause", onStop: "stop",
+             onNext: "doNext", onVolumeChanged: "doSetVolumeByApp"}
         ]}
     ],
 

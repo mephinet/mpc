@@ -96,6 +96,11 @@ enyo.kind({
         this.$.plugin.stop();
     },
 
+    crop: function () {
+        this.log();
+        this.$.plugin.crop();
+    },
+
     next: function () {
         this.log();
         this.$.plugin.next();
