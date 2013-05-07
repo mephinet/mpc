@@ -49,6 +49,10 @@ enyo.kind({
         this.callPluginMethod("next");
     },
 
+    crop: function () {
+        this.callPluginMethod("crop");
+    },
+
     setVolumeByApp: function (value) {
         this.callPluginMethod("set_volume_by_app", value);
     },

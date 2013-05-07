@@ -130,6 +130,12 @@ void handle_event(SDL_Event* event, pgmpc* mpc) {
       pgmpc_clear_error();
     }
     break;
+  case EVENT_CODE_CROP:
+    if(!pgmpc_crop(mpc)) {
+      send_error(pgmpc_get_error());
+      pgmpc_clear_error();
+    }
+    break;
   case EVENT_CODE_NEXT:
     if(!pgmpc_next(mpc)) {
       send_error(pgmpc_get_error());

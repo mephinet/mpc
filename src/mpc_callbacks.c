@@ -61,6 +61,12 @@ static PDL_bool stop(PDL_JSParameters* params) {
   return PDL_TRUE;
 }
 
+static PDL_bool crop(PDL_JSParameters* params) {
+  params = params;
+  push_event(EVENT_CODE_CROP);
+  return PDL_TRUE;
+}
+
 static PDL_bool next(PDL_JSParameters* params) {
   params = params;
   push_event(EVENT_CODE_NEXT);
@@ -110,6 +116,9 @@ int register_callbacks(void) {
     return 0;
   }
   if(PDL_RegisterJSHandler("stop", stop) != PDL_NOERROR) {
+    return 0;
+  }
+  if(PDL_RegisterJSHandler("crop", crop) != PDL_NOERROR) {
     return 0;
   }
   if(PDL_RegisterJSHandler("next", next) != PDL_NOERROR) {
