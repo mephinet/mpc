@@ -10,22 +10,22 @@ enyo.kind({
         }
     ],
 
-    setAlarm: function (minutes) {
+    setAlarm: function (minutes, crop) {
         if (minutes < 10) {
             minutes = "0" + minutes;
         }
-        this.callService("set", {"in": "00:" + minutes + ":00"});
+        this.callService("set", {"in": "00:" + minutes + ":00"}, crop);
     },
 
     clearAlarm: function () {
         this.callService("clear");
     },
 
-    callService: function (method, params) {
+    callService: function (method, params, crop) {
         enyo.mixin(params, {wakeup: true, key: "sleepAlarm",
                             uri: "palm://com.palm.applicationManager/launch",
                             params: {id: enyo.fetchAppInfo().id,
-                                     params: {action: "alarmWakeup"}}});
+                                     params: {action: "alarmWakeup", crop: crop}}});
 
         this.$.palmService.call(params, {method: method});
     },

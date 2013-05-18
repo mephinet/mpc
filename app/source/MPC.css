@@ -25,8 +25,13 @@
 }
 
 .mpc-search .input .close {
-	background:url(../images/btn_search_close.png) no-repeat 50% 50%;
-	height:24px;
-	width:24px;
-	margin-right:-5px;
+        background:url(../images/btn_search_close.png) no-repeat 50% 50%;
+        height:24px;
+        width:24px;
+        margin-right:-5px;
+}
+
+.mpc-sleep-settings .note {
+    font-size: smaller;
+    padding-right: 10px;
 }

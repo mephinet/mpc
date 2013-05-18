@@ -31,8 +31,10 @@ enyo.kind({
         ]},
         {kind: "MPC.About"},
         {kind: "MPC.Alarm"},
-        {kind: enyo.ApplicationEvents, onApplicationRelaunch: "applicationRelaunchHandler"}
+        {kind: enyo.ApplicationEvents, onApplicationRelaunch: "appLoaded"}
     ],
+
+    statusReceived: false,
 
     pluginReady: function () {
         this.log("plugin is ready!");
@@ -119,6 +121,10 @@ enyo.kind({
     updateStatus: function (sender, status) {
         enyo.scrim.hide();
         this.$.mainView.updateStatus(status);
+        if (!this.statusReceived) {
+            this.appLoaded();
+            this.statusReceived = true;
+        }
     },
 
     updateStatusWithError: function (sender, error) {
@@ -159,20 +165,24 @@ enyo.kind({
         close();
     },
 
-    sleepChanged: function (sender, minutes) {
+    sleepChanged: function (sender, minutes, crop) {
         if (minutes) {
-            this.$.alarm.setAlarm(minutes);
+            this.$.alarm.setAlarm(minutes, crop);
         } else {
             this.$.alarm.clearAlarm();
         }
     },
 
-    applicationRelaunchHandler: function () {
+    appLoaded: function () {
         var params = enyo.windowParams;
         if (params.action === "alarmWakeup") {
             this.log("Received alarm!");
-            this.$.plugin.setRepeat(false);
-            this.$.plugin.crop();
+            if (params.crop) {
+                this.$.plugin.setRepeat(false);
+                this.$.plugin.crop();
+            } else {
+                this.stop();
+            }
             this.$.mainView.resetSleep();
             return true;
         }
