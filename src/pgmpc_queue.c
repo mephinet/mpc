@@ -3,10 +3,10 @@
 #include "cjson/cJSON.h"
 
 char* pgmpc_get_queue(pgmpc* this) {
-  if(!pgmpc_check_and_reconnect(this)) return NULL;
+  if(!pgmpc_check_and_reconnect(this, __func__)) return NULL;
 
   if(!mpd_send_list_queue_meta(this->connection)) {
-    pgmpc_error("pgmpc_get_queue: command failed");
+    pgmpc_error(__func__, "command failed");
     return NULL;
   }
 
@@ -33,7 +33,7 @@ char* pgmpc_get_queue(pgmpc* this) {
   }
 
   if(!mpd_response_finish(this->connection)) {
-    pgmpc_error("pgmpc_get_queue: response failed");
+    pgmpc_error(__func__, "response failed");
     return NULL;
   }
 
@@ -43,18 +43,18 @@ char* pgmpc_get_queue(pgmpc* this) {
 }
 
 bool pgmpc_crop (pgmpc* this) {
-  if(!pgmpc_check_and_reconnect(this)) return false;
+  if(!pgmpc_check_and_reconnect(this, __func__)) return false;
 
   if (this->current_songpos < 0) return false;
 
   if(!mpd_run_delete_range(this->connection, 0, this->current_songpos)) {
-    pgmpc_error("pgmpc_crop: delete range 1 failed");
+    pgmpc_error(__func__, "delete range 1 failed");
     return false;
   }
 
   if (this->current_songpos < (int) this->queue_length-1) {
     if (!mpd_run_delete_range(this->connection, 1, RANGE_END)) {
-      pgmpc_error("pgmpc_crop: delete range 2 failed");
+      pgmpc_error(__func__, "delete range 2 failed");
       return false;
     }
   }

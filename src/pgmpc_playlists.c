@@ -3,10 +3,10 @@
 #include "cjson/cJSON.h"
 
 char* pgmpc_get_playlists(pgmpc* this) {
-  if(!pgmpc_check_and_reconnect(this)) return NULL;
+  if(!pgmpc_check_and_reconnect(this, __func__)) return NULL;
 
   if(!mpd_send_list_playlists(this->connection)) {
-    pgmpc_error("pgmpc_get_playlists: command failed");
+    pgmpc_error(__func__, "command failed");
     return NULL;
   }
 
@@ -26,7 +26,7 @@ char* pgmpc_get_playlists(pgmpc* this) {
   }
 
   if(!mpd_response_finish(this->connection)) {
-    pgmpc_error("pgmpc_get_playlists: response failed");
+    pgmpc_error(__func__, "response failed");
     return NULL;
   }
 
@@ -36,7 +36,7 @@ char* pgmpc_get_playlists(pgmpc* this) {
 }
 
 bool pgmpc_load_playlist(pgmpc* this, const char* playlist) {
-  if(!pgmpc_check_and_reconnect(this)) return false;
+  if(!pgmpc_check_and_reconnect(this, __func__)) return false;
   pgmpc_free_state(this);
-  return mpd_run_clear(this->connection) && mpd_run_load(this->connection, playlist);
+  return pgmpc_check(this, (mpd_run_clear(this->connection) && mpd_run_load(this->connection, playlist)), __func__);
 }

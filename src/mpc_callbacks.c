@@ -55,6 +55,11 @@ static PDL_bool play_by_id(PDL_JSParameters* params) {
   return PDL_TRUE;
 }
 
+static PDL_bool play_next_by_id(PDL_JSParameters* params) {
+  push_event_with_int(EVENT_CODE_PLAY_NEXT_BY_ID, params);
+  return PDL_TRUE;
+}
+
 static PDL_bool stop(PDL_JSParameters* params) {
   params = params;
   push_event(EVENT_CODE_STOP);
@@ -136,6 +141,10 @@ int register_callbacks(void) {
   if(PDL_RegisterJSHandler("load_playlist", load_playlist) != PDL_NOERROR) {
     return 0;
   }
+  if(PDL_RegisterJSHandler("play_next_by_id", play_next_by_id) != PDL_NOERROR) {
+    return 0;
+  }
+
   if(PDL_JSRegistrationComplete() != PDL_NOERROR) {
     return 0;
   }

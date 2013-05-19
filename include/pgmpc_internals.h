@@ -3,8 +3,9 @@
 
 #include "mpd/client.h"
 
-bool pgmpc_check_and_reconnect(pgmpc*);
-void pgmpc_error(const char*);
+bool pgmpc_check_and_reconnect(pgmpc*, const char* func);
+bool pgmpc_check(pgmpc*, bool, const char* func);
+void pgmpc_error(const char* func, const char* errstr);
 void pgmpc_free_state(pgmpc*);
 
 struct pgmpc_t {

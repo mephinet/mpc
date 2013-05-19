@@ -5,7 +5,7 @@
 #include <stdlib.h>
 
 bool pgmpc_update_state(pgmpc* this) {
-  if(!pgmpc_check_and_reconnect(this)) return false;
+  if(!pgmpc_check_and_reconnect(this, __func__)) return false;
 
   if (this->current_artist) {
     free(this->current_artist); this->current_artist = NULL;
@@ -38,7 +38,7 @@ bool pgmpc_update_state(pgmpc* this) {
   // volume
   struct mpd_status* status = mpd_run_status(this->connection);
   if(!status) {
-    pgmpc_error("pgmpc_update_state: failed getting current status");
+    pgmpc_error(__func__, "failed getting current status");
     return false;
   }
 
@@ -74,7 +74,7 @@ bool pgmpc_update_state(pgmpc* this) {
 char* pgmpc_get_status(pgmpc* this) {
   cJSON* root = cJSON_CreateObject();
   if(!root) {
-    pgmpc_error("pgmpc_get_status: failed allocating cJSON object");
+    pgmpc_error(__func__, "failed allocating cJSON object");
     return NULL;
   }
 

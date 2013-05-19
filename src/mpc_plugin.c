@@ -118,6 +118,13 @@ void handle_event(SDL_Event* event, pgmpc* mpc) {
     }
     free(value); value = NULL;
     break;
+  case EVENT_CODE_PLAY_NEXT_BY_ID:
+    if(!pgmpc_set_song_prio(mpc, 1, *value)) {
+      send_error(pgmpc_get_error());
+      pgmpc_clear_error();
+    }
+    free(value); value = NULL;
+    break;
   case EVENT_CODE_PAUSE:
     if(!pgmpc_pause(mpc)) {
       send_error(pgmpc_get_error());

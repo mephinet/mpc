@@ -14,6 +14,7 @@ void pgmpc_disconnect(pgmpc*);
 
 bool pgmpc_play(pgmpc*);
 bool pgmpc_play_by_id(pgmpc*, unsigned);
+bool pgmpc_set_song_prio(pgmpc*, unsigned prio, unsigned songid);
 bool pgmpc_pause(pgmpc*);
 bool pgmpc_stop(pgmpc*);
 bool pgmpc_next(pgmpc*);

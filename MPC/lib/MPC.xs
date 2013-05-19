@@ -19,40 +19,43 @@ pgmpc_new(char* package=NULL)
 void
 pgmpc_free(MPC this)
 
-int
+bool
 pgmpc_connect(MPC this, char* host, unsigned port)
 
 void
 pgmpc_disconnect(MPC this)
 
-int
+bool
 pgmpc_play(MPC this)
 
-int
+bool
 pgmpc_play_by_id(MPC this, unsigned songid)
 
-int
+bool
+pgmpc_set_song_prio(MPC this, unsigned prio, unsigned songid)
+
+bool
 pgmpc_next(MPC this)
 
-int
+bool
 pgmpc_crop(MPC this)
 
-int
+bool
 pgmpc_stop(MPC this)
 
-int
+bool
 pgmpc_pause(MPC this)
 
-int
+bool
 pgmpc_set_volume(MPC this, int new)
 
-int
+bool
 pgmpc_set_random(MPC this, bool new)
 
-int
+bool
 pgmpc_set_repeat(MPC this, bool new)
 
-int
+bool
 pgmpc_update_state(MPC this)
 
 const char*
