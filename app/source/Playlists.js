@@ -7,13 +7,13 @@ enyo.kind({
         onLoad: ""
     },
 
-    buttonCaption: $L("Load"),
+    primaryButtonCaption: $L("Load"),
 
     renderEntry: function (entry) {
         return entry.path;
     },
 
-    buttonClicked: function (sender, event) {
+    primaryButtonClicked: function (sender, event) {
         this.doLoad(this.data[this.currentlySelected].path);
     }
 });

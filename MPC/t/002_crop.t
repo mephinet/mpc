@@ -21,7 +21,7 @@ sub get_songid_at_pos {
     my $pos = shift;
     ok(my $queue_json = $mpc->get_queue(), 'get_queue returns');
     ok(my $queue = decode_json($queue_json), 'get_queue returns valid JSON');
-    my $songid = $queue->[$pos]->{songid};
+    my $songid = $queue->{songs}->[$pos]->{songid};
 }
 
 sub check_crop {
@@ -41,7 +41,7 @@ sub check_crop {
     # checking queue length after crop
     ok(my $queue_json = $mpc->get_queue(), 'get_queue returns');
     ok(my $queue = decode_json($queue_json), 'get_queue returns valid JSON');
-    cmp_ok(@$queue, '==', 1, 'queue is of length 1 after crop');
+    cmp_ok(@{$queue->{songs}}, '==', 1, 'queue is of length 1 after crop');
 
     return;
 }

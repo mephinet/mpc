@@ -15,20 +15,27 @@ enyo.kind({
              tapHighlight: true,
              components: [
                  {name: "caption", flex: 1},
-                 {kind: enyo.Button, onclick: "buttonClicked", showing: false}
+                 {name: "extraButton", kind: enyo.Button, onclick: "extraButtonClicked", toggling: true, showing: false},
+                 {name: "primaryButton", kind: enyo.Button, onclick: "primaryButtonClicked", showing: false}
              ]}
         ]}
     ],
 
     currentlySelected: null,
     filteredData: null,
+    primaryButtonCaption: null,
+    extraButtonCaption: null,
+    extraButtonEnabled: false,
 
     setupRow: function (sender, index) {
+        var selected = (index === this.currentlySelected);
         if (this.filteredData && this.filteredData[index]) {
             var entry = this.filteredData[index];
             this.$.caption.setContent(this.renderEntry(entry));
-            this.$.button.setCaption(this.buttonCaption);
-            this.$.button.setShowing(index === this.currentlySelected);
+            this.$.primaryButton.setCaption(this.primaryButtonCaption);
+            this.$.primaryButton.setShowing(selected);
+            this.$.extraButton.setCaption(this.extraButtonCaption);
+            this.$.extraButton.setShowing(this.extraButtonEnabled && selected);
             return true;
         }
     },

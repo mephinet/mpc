@@ -59,7 +59,8 @@ bool pgmpc_connect(pgmpc* this, const char* host, unsigned port) {
 }
 
 static bool pgmpc_reconnect(pgmpc* this) {
-  this->connection = mpd_connection_new(this->host, this->port, timeout);
+  this->connection   = mpd_connection_new(this->host, this->port, timeout);
+  this->prio_support = (mpd_connection_cmp_server_version(this->connection, 0, 17, 0) >= 0);
   return pgmpc_check_and_reconnect(this, __func__);
 }
 

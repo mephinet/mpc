@@ -15,6 +15,7 @@ enyo.kind({
         onReconnect: "",
         onLoadPlaylist: "",
         onPlayById: "",
+        onPlayNext: "",
         onSetVolumeByApp: "",
         onNewSong: "",
         onSleepChanged: ""
@@ -43,7 +44,7 @@ enyo.kind({
         {name: "right", components: [
             {kind: "MPC.StatusHeader", onSearch: "search", onReconnect: "doReconnect"},
             {name: "mainPane", kind: enyo.Pane, flex: 1, onSelectView: "mainPaneSelected", components: [
-                {kind: "MPC.Queue", onPlay: "doPlayById"},
+                {kind: "MPC.Queue", onPlay: "doPlayById", onPlayNext: "doPlayNext"},
                 {kind: "MPC.Playlists", onLoad: "loadPlaylist"},
                 {kind: "MPC.SleepSettings", onSleepChanged: "doSleepChanged"}
             ]},

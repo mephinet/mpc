@@ -41,6 +41,10 @@ enyo.kind({
         this.callPluginMethod("play_by_id", songid);
     },
 
+    playNext: function (songid) {
+        this.callPluginMethod("play_next_by_id", songid);
+    },
+
     stop: function () {
         this.callPluginMethod("stop");
     },

@@ -5,15 +5,18 @@ enyo.kind({
     kind: "MPC.VirtualList",
 
     published: {
-        currentSongId: -1
+        currentSongId: -1,
+        prioSupport: false,
     },
 
     events: {
-        onPlay: ""
+        onPlay: "",
+        onPlayNext: "",
     },
 
     songIdMap: null,
-    buttonCaption: $L("Play"),
+    primaryButtonCaption: $L("Play"),
+    extraButtonCaption: $L("Play next"),
 
     setupRow: function (sender, index) {
         if (this.inherited(arguments)) {
@@ -46,8 +49,13 @@ enyo.kind({
         return (data.querystring.indexOf(this.query) >= 0);
     },
 
-    buttonClicked: function (sender, event) {
+    primaryButtonClicked: function (sender, event) {
         this.doPlay(this.filteredData[this.currentlySelected].songid);
+    },
+
+    extraButtonClicked: function (sender, event) {
+        this.doPlayNext(this.filteredData[this.currentlySelected].songid);
+        this.$.extraButton.setDisabled(true);
     },
 
     currentSongIdChanged: function (oldSongId) {
@@ -55,5 +63,10 @@ enyo.kind({
             this.$.list.updateRow(this.songIdMap[oldSongId]);
             this.$.list.updateRow(this.songIdMap[this.currentSongId]);
         }
+    },
+
+    prioSupportChanged: function () {
+        this.extraButtonEnabled = this.prioSupport;
     }
+
 });

@@ -70,10 +70,13 @@ ok($mpc->queue_version() > 0, 'get_status sets queue_version');
 
 ok(my $queue_json = $mpc->get_queue(), 'get_queue returns');
 ok(my $queue = decode_json($queue_json), 'get_queue returns valid JSON');
-is(ref($queue), 'ARRAY', 'get_queue returns an array');
-ok($queue->[0]->{artist} || $queue->[0]->{title} || $queue->[0]->{filename}, 'queue entry is non-empty');
+is(ref($queue), 'HASH', 'get_queue returns a hash');
+ok(my $songs = $queue->{songs}, 'queue contains songs');
 
-my $songid = $queue->[0]->{songid};
+is(ref($songs), 'ARRAY', 'songs is an array');
+ok($songs->[0]->{artist} || $songs->[0]->{title} || $songs->[0]->{filename}, 'queue entry is non-empty');
+
+my $songid = $songs->[0]->{songid};
 like($songid, qr/^\d+$/, "valid ID");
 ok($mpc->play_by_id($songid), "play_by_id works");
 

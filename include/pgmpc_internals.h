@@ -13,6 +13,7 @@ struct pgmpc_t {
 
   char* host;
   unsigned int port;
+  bool prio_support;
 
   unsigned int elapsed_time;
   unsigned int total_time;

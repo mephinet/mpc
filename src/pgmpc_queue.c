@@ -10,7 +10,11 @@ char* pgmpc_get_queue(pgmpc* this) {
     return NULL;
   }
 
-  cJSON* result = cJSON_CreateArray();
+  cJSON* result = cJSON_CreateObject();
+  cJSON_AddBoolToObject(result, "prio_support", this->prio_support);
+
+  cJSON* songs = cJSON_CreateArray();
+  cJSON_AddItemToObject(result, "songs", songs);
   struct mpd_song* song = NULL;
   while((song = mpd_recv_song(this->connection))) {
 
@@ -27,7 +31,7 @@ char* pgmpc_get_queue(pgmpc* this) {
     cJSON_AddNumberToObject(entry, "songid", mpd_song_get_id(song));
 
     if(artist||title||filename) {
-      cJSON_AddItemToArray(result, entry);
+      cJSON_AddItemToArray(songs, entry);
     }
     mpd_song_free(song); song = NULL;
   }

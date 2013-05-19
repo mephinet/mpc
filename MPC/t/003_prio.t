@@ -13,15 +13,17 @@ use MPC;
 my $mpc = new_ok('MPC');
 ok($mpc->connect('localhost', 6600), 'call connect');
 
-my $res = $mpc->set_song_prio(1, 2);
+ok(my $queue_json = $mpc->get_queue(), 'get_queue successful');
+ok(my $queue = decode_json($queue_json), 'get_queue returned valid JSON');
+ok(exists $queue->{prio_support}, 'get_queue returns prio_support');
 
 SKIP: {
-    if (!$res and $mpc->get_error() =~ /unknown command/) {
+    if (!$queue->{prio_support}) {
         skip "prio tests as server does not support prioid command", 1;
     }
 
-    ok($res, "set_song_prio returned true");
-
+    my $songid = 42;
+    ok($mpc->set_song_prio($songid), "set_song_prio returned true");
 }
 
 done_testing;

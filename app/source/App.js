@@ -11,7 +11,8 @@ enyo.kind({
              onRandomChanged: "randomChanged", onRepeatChanged: "repeatChanged",
              onReconnect: "reconnect", onLoadPlaylist: "loadPlaylist",
              onPlayById: "playById", onSetVolumeByApp: "setVolumeByApp",
-             onNewSong: "newSong", onSleepChanged: "sleepChanged"
+             onNewSong: "newSong", onSleepChanged: "sleepChanged",
+             onPlayNext: "playNext"
             },
             {kind: "MPC.Prefs", onLoaded: "prefsLoaded", onSave: "prefsSaved"}
         ]},
@@ -87,6 +88,11 @@ enyo.kind({
         this.$.plugin.playById(songid);
     },
 
+    playNext: function (sender, songid) {
+        this.log(songid);
+        this.$.plugin.playNext(songid);
+    },
+
     loadPlaylist: function (sender, playlist) {
         this.log(playlist);
         enyo.scrim.show();
@@ -134,7 +140,8 @@ enyo.kind({
 
     updateQueue: function (sender, queue) {
         this.log();
-        this.$.mainView.$.queue.setData(queue);
+        this.$.mainView.$.queue.setPrioSupport(queue.prio_support);
+        this.$.mainView.$.queue.setData(queue.songs);
     },
 
     updatePlaylists: function (sender, playlists) {
