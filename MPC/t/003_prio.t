@@ -22,8 +22,8 @@ SKIP: {
         skip "prio tests as server does not support prioid command", 1;
     }
 
-    my $songid = 42;
-    ok($mpc->set_song_prio($songid), "set_song_prio returned true");
+    my $songid = $queue->{songs}->[0]->{songid};
+    ok($mpc->set_song_prio(1, $songid), "set_song_prio returned true");
 }
 
 done_testing;

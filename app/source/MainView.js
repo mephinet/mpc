@@ -5,6 +5,12 @@ enyo.kind({
     name: "MPC.MainView",
     kind: enyo.SlidingPane,
 
+    published: {
+        queue: null,
+        playlists:[],
+        prioSupport: null
+    },
+
     events: {
         onPlay: "",
         onPause: "",
@@ -62,7 +68,7 @@ enyo.kind({
             // running in a browser - create dummy queue
             var p = [], i;
             for (i = 1; i < 1000; i++) {
-                p.push({artist: "Artist " + i, title: "Title " + i, songid: i});
+                p.push({artist: "Artist " + i, title: "Title " + i, songid: i, duration: 90});
             }
             this.$.queue.setData(p);
             this.$.playlists.setData([{path: "foo"}, {path: "bar"}, {path: "baz"}]);
@@ -138,6 +144,18 @@ enyo.kind({
 
     resetSleep: function () {
         this.$.sleepSettings.resetSleep();
+    },
+
+    queueChanged: function () {
+        this.$.queue.setData(this.queue);
+    },
+
+    prioSupportChanged: function () {
+        this.$.queue.setPrioSupport(this.prioSupport);
+    },
+
+    playlistsChanged: function () {
+        this.$.playlists.setData(this.playlists);
     }
 
 });

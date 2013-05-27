@@ -29,6 +29,8 @@ char* pgmpc_get_queue(pgmpc* this) {
     if (filename) cJSON_AddStringToObject(entry, "filename", filename);
 
     cJSON_AddNumberToObject(entry, "songid", mpd_song_get_id(song));
+    cJSON_AddNumberToObject(entry, "prio", mpd_song_get_prio(song));
+    cJSON_AddNumberToObject(entry, "duration", mpd_song_get_duration(song));
 
     if(artist||title||filename) {
       cJSON_AddItemToArray(songs, entry);

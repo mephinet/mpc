@@ -46,6 +46,7 @@ enyo.kind({
     },
 
     queryChanged: function () {
+        this.currentlySelected = null;
         this.updateFilteredData();
         this.$.list.refresh();
     },

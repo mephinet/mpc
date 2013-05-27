@@ -36,6 +36,7 @@ enyo.kind({
     ],
 
     statusReceived: false,
+    status: null,
 
     pluginReady: function () {
         this.log("plugin is ready!");
@@ -114,6 +115,29 @@ enyo.kind({
         this.$.plugin.next();
     },
 
+    limitQueue: function (seconds) {
+        var keep = [];
+        var all  = [];
+        this.$.mainView.$.queue.getData().map(function (s) {
+            if ((!this.status) || (s.songid !== this.status.songid)) {
+                all.push({songid: s.songid, duration: s.duration});
+            }
+        });
+
+        if (this.status) {
+            keep.push(this.status.songid);
+            seconds -= this.status.total_time - this.status.elapsed_time;
+        }
+
+        while (seconds > 0) {
+            idx = Math.floor(Math.random () * all.length);
+            var song = all.splice(idx, 1)[0];
+            keep.push(song.songid);
+            seconds -= song.duration;
+        }
+        this.$.plugin.cropTo(keep);
+    },
+    
     randomChanged: function (sender, value) {
         this.log(value);
         this.$.plugin.setRandom(value);
@@ -126,6 +150,7 @@ enyo.kind({
 
     updateStatus: function (sender, status) {
         enyo.scrim.hide();
+        this.status = status;
         this.$.mainView.updateStatus(status);
         if (!this.statusReceived) {
             this.appLoaded();
@@ -140,13 +165,13 @@ enyo.kind({
 
     updateQueue: function (sender, queue) {
         this.log();
-        this.$.mainView.$.queue.setPrioSupport(queue.prio_support);
-        this.$.mainView.$.queue.setData(queue.songs);
+        this.$.mainView.setPrioSupport(queue.prio_support);
+        this.$.mainView.setQueue(queue.songs);
     },
 
     updatePlaylists: function (sender, playlists) {
         this.log();
-        this.$.mainView.$.playlists.setData(playlists);
+        this.$.mainView.setPlaylists(playlists);
     },
 
     setVolumeByApp: function (sender, volume) {

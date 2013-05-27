@@ -8,6 +8,8 @@ Module::Build->new
       build_requires => { 'ExtUtils::CBuilder' => 0,
                           'JSON' => 0,
                         },
+      test_requires => { 'Test::Exception' => 0,
+                       },
       extra_linker_flags => '-L../build/lib -lpgmpc',
       extra_compiler_flags => '-I../build/include -Wall -W -g -O0',
     )->create_build_script;

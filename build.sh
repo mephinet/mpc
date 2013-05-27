@@ -60,7 +60,7 @@ then
     perl Build.PL --install_base $BUILDDIR
     [[ "$NOCLEAN" ]] || ./Build clean
     ./Build build
-    LD_LIBRARY_PATH=$PWD/blib/arch/auto/MPC:$LD_LIBRARY_PATH ./Build test
+    LD_LIBRARY_PATH=$PWD/blib/arch/auto/MPC:$LD_LIBRARY_PATH ./Build test verbose=1
 elif [[ "$TARGET" == "device" ]]
 then
     cp -p $BUILDDIR/bin/mpc_plugin app/

@@ -109,6 +109,23 @@ bool pgmpc_set_repeat(pgmpc* this, bool new) {
   return pgmpc_check(this, mpd_run_repeat(this->connection, new), __func__);
 }
 
+bool pgmpc_crop_to(pgmpc* this, int* ids) {
+  if(!pgmpc_check_and_reconnect(this, __func__)) return false;
+
+  // remove all ids
+  mpd_command_list_begin(this->connection, false);
+  unsigned i;
+  for (i=0; ids[i]>0; i++) {
+    mpd_send_move_id(this->connection, ids[i], i);
+  }
+
+  mpd_send_delete_range(this->connection, i, (unsigned) -1);
+  mpd_command_list_end(this->connection);
+  mpd_response_finish(this->connection);
+
+  return true;
+}
+
 void pgmpc_disconnect (pgmpc* this) {
   if(this->connection) {
     mpd_connection_free(this->connection);

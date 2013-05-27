@@ -1,6 +1,8 @@
 # -*- perl -*-
 
 use Test::More;
+use Test::Exception;
+
 use JSON;
 
 use MPC;
@@ -76,6 +78,8 @@ ok(my $songs = $queue->{songs}, 'queue contains songs');
 is(ref($songs), 'ARRAY', 'songs is an array');
 ok($songs->[0]->{artist} || $songs->[0]->{title} || $songs->[0]->{filename}, 'queue entry is non-empty');
 
+like($songs->[0]->{duration}, qr/^\d+$/, 'song has a duration');
+
 my $songid = $songs->[0]->{songid};
 like($songid, qr/^\d+$/, "valid ID");
 ok($mpc->play_by_id($songid), "play_by_id works");
@@ -93,6 +97,17 @@ ok($mpc->set_repeat(1), 'set repeat to true');
 ok(get_status($mpc)->{repeat}, 'setting repeat to true worked');
 ok($mpc->set_repeat(0), 'set repeat to false');
 ok(!get_status($mpc)->{repeat}, 'setting repeat to false worked again');
+
+# crop_to error handling
+throws_ok(sub {$mpc->crop_to(42)}, qr/not.*array ref/, 'crop_to croaks on incorrect input');
+throws_ok(sub {$mpc->crop_to([])}, qr/array.*empty/, 'crop_to croaks on empty array');
+
+my $ids = [$songs->[0]->{songid}, $songs->[1]->{songid}];
+ok($mpc->crop_to($ids), 'crop_to returns true');
+ok($queue_json = $mpc->get_queue(), 'get_queue returns');
+ok($queue = decode_json($queue_json), 'get_queue returns valid JSON');
+ok($songs = $queue->{songs}, 'queue contains songs');
+cmp_ok(scalar @$songs, '==', 2, 'correct queue length after crop_to');
 
 ok($mpc->stop(), 'call stop');
 is(get_state($mpc), 'stop', 'correct state after stop');

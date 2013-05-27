@@ -5,6 +5,7 @@
 #include "mpc_plugin.h"
 #include "mpc_callbacks.h"
 #include "mpc_timers.h"
+#include "cjson/cJSON.h"
 
 unsigned int queue_version = 0;
 
@@ -86,6 +87,24 @@ void set_volume(pgmpc* mpc, int new) {
   }
 }
 
+bool crop_to (pgmpc* mpc, char* json_string) {
+  cJSON* j = cJSON_Parse(json_string);
+  unsigned cnt = cJSON_GetArraySize(j);
+  int** id_list = calloc(sizeof(int*), cnt+1);
+  id_list[cnt] = NULL;
+  unsigned i;
+  for(i = 0; i < cnt; i++) {
+    cJSON* e = cJSON_GetArrayItem(j, i);
+    id_list[i] = &e->valueint;
+  }
+
+  if(!pgmpc_crop_to(mpc, id_list)) {
+    free(id_list); id_list = NULL;
+  }
+  cJSON_Delete(j); j = NULL;
+  return true;
+}
+
 void handle_event(SDL_Event* event, pgmpc* mpc) {
   int* value = event->user.data1;
 
@@ -93,6 +112,8 @@ void handle_event(SDL_Event* event, pgmpc* mpc) {
   int* portp = event->user.data2;
 
   char* playlist = event->user.data1;
+
+  char* id_json = event->user.data1;
 
   switch (event->user.code) {
   case EVENT_CODE_CONNECT:
@@ -153,7 +174,7 @@ void handle_event(SDL_Event* event, pgmpc* mpc) {
     update_status(mpc);
     break;
   case EVENT_CODE_SET_VOLUME:
-    if(value) {      
+    if(value) {
       set_volume(mpc, *value);
       free(value); value = NULL;
     } else {
@@ -188,6 +209,13 @@ void handle_event(SDL_Event* event, pgmpc* mpc) {
       pgmpc_clear_error();
     }
     free(playlist); playlist = NULL;
+    break;
+  case EVENT_CODE_CROP_TO:
+    if(!crop_to(mpc, id_json)) {
+      send_error(pgmpc_get_error());
+      pgmpc_clear_error();
+    }
+    free(id_json); id_json = NULL;
     break;
   }
 }

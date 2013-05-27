@@ -47,7 +47,6 @@ sub check_crop {
 }
 
 
-
 subtest 'crop of first song' => sub {
     ok($mpc->load_playlist($playlist), 'load first playlist');
     check_crop(get_songid_at_pos(0));
@@ -68,5 +67,7 @@ subtest 'double-crop' => sub {
     check_crop($id);
     check_crop($id);
 };
+
+ok($mpc->stop(), 'stop playing');
 
 done_testing;

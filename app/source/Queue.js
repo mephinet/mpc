@@ -20,7 +20,12 @@ enyo.kind({
 
     setupRow: function (sender, index) {
         if (this.inherited(arguments)) {
-            this.$.item.addRemoveClass("playing", this.filteredData[index].songid === this.currentSongId);
+            var data = this.filteredData[index];
+            this.$.item.addRemoveClass("playing", data.songid === this.currentSongId);
+
+            this.$.extraButton.setDepressed(data.prio > 0);
+            this.$.extraButton.setDisabled(data.prio > 0);
+
             return true;
         }
     },
@@ -55,7 +60,6 @@ enyo.kind({
 
     extraButtonClicked: function (sender, event) {
         this.doPlayNext(this.filteredData[this.currentlySelected].songid);
-        this.$.extraButton.setDisabled(true);
     },
 
     currentSongIdChanged: function (oldSongId) {

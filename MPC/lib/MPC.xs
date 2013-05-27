@@ -41,6 +41,32 @@ bool
 pgmpc_crop(MPC this)
 
 bool
+pgmpc_crop_to(MPC this, SV* aref)
+PREINIT:
+  SV** svnv = NULL;
+  int* ids = NULL;
+  I32 maxidx;
+  I32 i;
+INIT:
+if((!SvROK(aref)) || (SvTYPE(SvRV(aref)) != SVt_PVAV))
+    croak("parameter of crop_to is not an array reference");
+CODE:
+  maxidx = av_len((AV*) SvRV(aref));
+  if(maxidx<0) croak("array must be non-empty");
+  ids = calloc(sizeof(int*), maxidx+2);
+  for(i = 0; i <= maxidx; i++) {
+    svnv = av_fetch((AV*)SvRV(aref), i, false);
+    if((!svnv) || (!SvIOK(*svnv))) croak("array element %d is not an integer", i);
+    ids[i] = SvIV(*svnv);
+  }
+  ids[i] = 0;
+  RETVAL = pgmpc_crop_to(this, ids);
+  free(ids); ids = NULL;
+OUTPUT:
+  RETVAL
+
+
+bool
 pgmpc_stop(MPC this)
 
 bool
