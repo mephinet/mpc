@@ -53,7 +53,7 @@ if((!SvROK(aref)) || (SvTYPE(SvRV(aref)) != SVt_PVAV))
 CODE:
   maxidx = av_len((AV*) SvRV(aref));
   if(maxidx<0) croak("array must be non-empty");
-  ids = calloc(sizeof(int*), maxidx+2);
+  ids = calloc(sizeof(int), maxidx+2);
   for(i = 0; i <= maxidx; i++) {
     svnv = av_fetch((AV*)SvRV(aref), i, false);
     if((!svnv) || (!SvIOK(*svnv))) croak("array element %d is not an integer", i);
