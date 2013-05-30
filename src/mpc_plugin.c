@@ -87,7 +87,7 @@ void set_volume(pgmpc* mpc, int new) {
   }
 }
 
-bool crop_to (pgmpc* mpc, char* json_string) {
+bool reduce_queue (pgmpc* mpc, char* json_string) {
   cJSON* j = cJSON_Parse(json_string);
   unsigned cnt = cJSON_GetArraySize(j);
   int** id_list = calloc(sizeof(int*), cnt+1);
@@ -98,7 +98,7 @@ bool crop_to (pgmpc* mpc, char* json_string) {
     id_list[i] = &e->valueint;
   }
 
-  if(!pgmpc_crop_to(mpc, id_list)) {
+  if(!pgmpc_reduce_queue(mpc, id_list)) {
     free(id_list); id_list = NULL;
   }
   cJSON_Delete(j); j = NULL;
@@ -210,8 +210,8 @@ void handle_event(SDL_Event* event, pgmpc* mpc) {
     }
     free(playlist); playlist = NULL;
     break;
-  case EVENT_CODE_CROP_TO:
-    if(!crop_to(mpc, id_json)) {
+  case EVENT_CODE_REDUCE_QUEUE:
+    if(!reduce_queue(mpc, id_json)) {
       send_error(pgmpc_get_error());
       pgmpc_clear_error();
     }

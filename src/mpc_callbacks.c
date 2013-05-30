@@ -107,14 +107,14 @@ static PDL_bool load_playlist(PDL_JSParameters* params) {
   return PDL_TRUE;
 }
 
-static PDL_bool crop_to(PDL_JSParameters* params) {
+static PDL_bool reduce_queue(PDL_JSParameters* params) {
   SDL_Event event;
 
   const char* id_list = NULL;
   id_list = PDL_GetJSParamString(params, 0);
 
   event.user.type = SDL_USEREVENT;
-  event.user.code = EVENT_CODE_CROP_TO;
+  event.user.code = EVENT_CODE_REDUCE_QUEUE;
   event.user.data1 = strdup(id_list);
   SDL_PushEvent(&event);
 
@@ -158,7 +158,7 @@ int register_callbacks(void) {
   if(PDL_RegisterJSHandler("play_next_by_id", play_next_by_id) != PDL_NOERROR) {
     return 0;
   }
-  if(PDL_RegisterJSHandler("crop_to", crop_to) != PDL_NOERROR) {
+  if(PDL_RegisterJSHandler("reduce_queue", reduce_queue) != PDL_NOERROR) {
     return 0;
   }
 

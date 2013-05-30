@@ -41,7 +41,7 @@ bool
 pgmpc_crop(MPC this)
 
 bool
-pgmpc_crop_to(MPC this, SV* aref)
+pgmpc_reduce_queue(MPC this, SV* aref)
 PREINIT:
   SV** svnv = NULL;
   int* ids = NULL;
@@ -49,7 +49,7 @@ PREINIT:
   I32 i;
 INIT:
 if((!SvROK(aref)) || (SvTYPE(SvRV(aref)) != SVt_PVAV))
-    croak("parameter of crop_to is not an array reference");
+    croak("parameter of reduce_queue is not an array reference");
 CODE:
   maxidx = av_len((AV*) SvRV(aref));
   if(maxidx<0) croak("array must be non-empty");
@@ -60,7 +60,7 @@ CODE:
     ids[i] = SvIV(*svnv);
   }
   ids[i] = 0;
-  RETVAL = pgmpc_crop_to(this, ids);
+  RETVAL = pgmpc_reduce_queue(this, ids);
   free(ids); ids = NULL;
 OUTPUT:
   RETVAL

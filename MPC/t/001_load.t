@@ -98,16 +98,16 @@ ok(get_status($mpc)->{repeat}, 'setting repeat to true worked');
 ok($mpc->set_repeat(0), 'set repeat to false');
 ok(!get_status($mpc)->{repeat}, 'setting repeat to false worked again');
 
-# crop_to error handling
-throws_ok(sub {$mpc->crop_to(42)}, qr/not.*array ref/, 'crop_to croaks on incorrect input');
-throws_ok(sub {$mpc->crop_to([])}, qr/array.*empty/, 'crop_to croaks on empty array');
+# reduce_queue error handling
+throws_ok(sub {$mpc->reduce_queue(42)}, qr/not.*array ref/, 'reduce_queue croaks on incorrect input');
+throws_ok(sub {$mpc->reduce_queue([])}, qr/array.*empty/, 'reduce_queue croaks on empty array');
 
 my $ids = [$songs->[0]->{songid}, $songs->[1]->{songid}];
-ok($mpc->crop_to($ids), 'crop_to returns true');
+ok($mpc->reduce_queue($ids), 'reduce_queue returns true');
 ok($queue_json = $mpc->get_queue(), 'get_queue returns');
 ok($queue = decode_json($queue_json), 'get_queue returns valid JSON');
 ok($songs = $queue->{songs}, 'queue contains songs');
-cmp_ok(scalar @$songs, '==', 2, 'correct queue length after crop_to');
+cmp_ok(scalar @$songs, '==', 2, 'correct queue length after reduce_queue');
 
 ok($mpc->stop(), 'call stop');
 is(get_state($mpc), 'stop', 'correct state after stop');

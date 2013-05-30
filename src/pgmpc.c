@@ -109,7 +109,7 @@ bool pgmpc_set_repeat(pgmpc* this, bool new) {
   return pgmpc_check(this, mpd_run_repeat(this->connection, new), __func__);
 }
 
-bool pgmpc_crop_to(pgmpc* this, int* ids) {
+bool pgmpc_reduce_queue(pgmpc* this, int* ids) {
   if(!pgmpc_check_and_reconnect(this, __func__)) return false;
 
   // remove all ids

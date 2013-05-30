@@ -11,7 +11,7 @@ enyo.kind({
              onRandomChanged: "randomChanged", onRepeatChanged: "repeatChanged",
              onReconnect: "reconnect", onLoadPlaylist: "loadPlaylist",
              onPlayById: "playById", onSetVolumeByApp: "setVolumeByApp",
-             onNewSong: "newSong", onSleepChanged: "sleepChanged",
+             onNewSong: "newSong", onSleepChanged: "reduceQueue",
              onPlayNext: "playNext"
             },
             {kind: "MPC.Prefs", onLoaded: "prefsLoaded", onSave: "prefsSaved"}
@@ -31,7 +31,6 @@ enyo.kind({
             {caption: $L("About..."), onclick: "showAbout"}
         ]},
         {kind: "MPC.About"},
-        {kind: "MPC.Alarm"},
         {kind: enyo.ApplicationEvents, onApplicationRelaunch: "appLoaded"}
     ],
 
@@ -115,7 +114,7 @@ enyo.kind({
         this.$.plugin.next();
     },
 
-    limitQueue: function (seconds) {
+    reduceQueue: function (sender, seconds) {
         var keep = [];
         var all  = [];
         this.$.mainView.$.queue.getData().map(function (s) {
@@ -135,7 +134,7 @@ enyo.kind({
             keep.push(song.songid);
             seconds -= song.duration;
         }
-        this.$.plugin.cropTo(keep);
+        this.$.plugin.reduceQueue(keep);
     },
     
     randomChanged: function (sender, value) {
@@ -195,28 +194,5 @@ enyo.kind({
     errorButtonClicked: function () {
         this.$.errorDialog.close();
         close();
-    },
-
-    sleepChanged: function (sender, minutes, crop) {
-        if (minutes) {
-            this.$.alarm.setAlarm(minutes, crop);
-        } else {
-            this.$.alarm.clearAlarm();
-        }
-    },
-
-    appLoaded: function () {
-        var params = enyo.windowParams;
-        if (params.action === "alarmWakeup") {
-            this.log("Received alarm!");
-            if (params.crop) {
-                this.$.plugin.setRepeat(false);
-                this.$.plugin.crop();
-            } else {
-                this.stop();
-            }
-            this.$.mainView.resetSleep();
-            return true;
-        }
     }
 });

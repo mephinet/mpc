@@ -73,8 +73,8 @@ enyo.kind({
         this.callPluginMethod("load_playlist", playlist);
     },
 
-    cropTo: function (ids) {
-        this.callPluginMethod("crop_to", enyo.json.stringify(ids));
+    reduceQueue: function (ids) {
+        this.callPluginMethod("reduce_queue", enyo.json.stringify(ids));
     },
 
     updateStatus: function (json) {

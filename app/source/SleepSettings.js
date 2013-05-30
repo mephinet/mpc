@@ -11,27 +11,19 @@ enyo.kind({
     components: [
         {kind: enyo.Group, components: [
             {kind: enyo.Item, layoutKind: "HFlexLayout", align: "center", components: [
-                {content: $L("Active"), flex: 1},
-                {name: "button", kind: enyo.ToggleButton, onChange: "settingsChanged"}
+                {content: $L("Crop queue to"), flex: 1},
+                {name: "minutes", kind: enyo.IntegerPicker, label: $L("minutes"), min: 1, max: 59}
             ]},
-            {kind: enyo.Item, layoutKind: "HFlexLayout", align: "center", components: [
-                {content: $L("Sleep after"), flex: 1},
-                {name: "minutes", kind: enyo.IntegerPicker, label: $L("minutes"), min: 1, max: 59, onChange: "settingsChanged"}
-            ]},
-            {kind: enyo.Item, layoutKind: "HFlexLayout", align: "center", components: [
-                {content: $L("Finish last song"), flex: 1},
-                {content: $L("Warning: this will erase the queue"), className: "note"},
-                {name: "crop", kind: enyo.ToggleButton, onChange: "settingsChanged"}
+            {kind: enyo.Item, layoutKind: "HFlexLayout", pack: "center", align: "center", components: [
+                {kind: enyo.Button, label: $L("Crop Queue"), onclick: "crop", className: "enyo-button-affirmative"}
             ]}
+
         ]}
     ],
 
-    settingsChanged: function (sender) {
-        var s = 0;
-        if (this.$.button.getState()) {
-            s = this.$.minutes.getValue();
-        }
-        this.doSleepChanged(s, this.$.crop.getState());
+    crop: function (sender) {
+        var s = this.$.minutes.getValue() * 60;
+        this.doSleepChanged(s);
     },
 
     resetSleep: function () {
