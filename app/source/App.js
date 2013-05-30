@@ -30,11 +30,9 @@ enyo.kind({
             {caption: $L("Preferences"), onclick: "showPrefs"},
             {caption: $L("About..."), onclick: "showAbout"}
         ]},
-        {kind: "MPC.About"},
-        {kind: enyo.ApplicationEvents, onApplicationRelaunch: "appLoaded"}
+        {kind: "MPC.About"}
     ],
 
-    statusReceived: false,
     status: null,
 
     pluginReady: function () {
@@ -52,6 +50,7 @@ enyo.kind({
         this.log("connect data loaded: " + host + ":" + port);
         enyo.scrim.show();
         this.$.plugin.connect(host, port);
+        this.status = null;
     },
 
     prefsLoaded: function (sender) {
@@ -97,6 +96,7 @@ enyo.kind({
         this.log(playlist);
         enyo.scrim.show();
         this.$.plugin.loadPlaylist(playlist);
+        this.status = null;
     },
 
     stop: function () {
@@ -115,21 +115,22 @@ enyo.kind({
     },
 
     reduceQueue: function (sender, seconds) {
+        this.log(seconds);
         var keep = [];
         var all  = [];
-        this.$.mainView.$.queue.getData().map(function (s) {
+        enyo.map(this.$.mainView.getQueue(), function (s) {
             if ((!this.status) || (s.songid !== this.status.songid)) {
                 all.push({songid: s.songid, duration: s.duration});
             }
-        });
+        }, this);
 
-        if (this.status) {
+        if (this.status && this.status.songid && this.status.total_time) {
             keep.push(this.status.songid);
             seconds -= this.status.total_time - this.status.elapsed_time;
         }
 
-        while (seconds > 0) {
-            idx = Math.floor(Math.random () * all.length);
+        while (seconds > 0 && all.length > 0) {
+            var idx = Math.floor(Math.random() * all.length);
             var song = all.splice(idx, 1)[0];
             keep.push(song.songid);
             seconds -= song.duration;
@@ -151,10 +152,6 @@ enyo.kind({
         enyo.scrim.hide();
         this.status = status;
         this.$.mainView.updateStatus(status);
-        if (!this.statusReceived) {
-            this.appLoaded();
-            this.statusReceived = true;
-        }
     },
 
     updateStatusWithError: function (sender, error) {

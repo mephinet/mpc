@@ -74,6 +74,7 @@ enyo.kind({
     },
 
     reduceQueue: function (ids) {
+        this.log(ids);
         this.callPluginMethod("reduce_queue", enyo.json.stringify(ids));
     },
 

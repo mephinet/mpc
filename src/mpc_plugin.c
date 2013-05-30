@@ -90,12 +90,12 @@ void set_volume(pgmpc* mpc, int new) {
 bool reduce_queue (pgmpc* mpc, char* json_string) {
   cJSON* j = cJSON_Parse(json_string);
   unsigned cnt = cJSON_GetArraySize(j);
-  int** id_list = calloc(sizeof(int*), cnt+1);
-  id_list[cnt] = NULL;
+  int* id_list = calloc(sizeof(int), cnt+1);
+  id_list[cnt] = 0;
   unsigned i;
   for(i = 0; i < cnt; i++) {
     cJSON* e = cJSON_GetArrayItem(j, i);
-    id_list[i] = &e->valueint;
+    id_list[i] = e->valueint;
   }
 
   if(!pgmpc_reduce_queue(mpc, id_list)) {

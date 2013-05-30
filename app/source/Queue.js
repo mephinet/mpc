@@ -6,12 +6,12 @@ enyo.kind({
 
     published: {
         currentSongId: -1,
-        prioSupport: false,
+        prioSupport: false
     },
 
     events: {
         onPlay: "",
-        onPlayNext: "",
+        onPlayNext: ""
     },
 
     songIdMap: null,

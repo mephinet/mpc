@@ -7,7 +7,7 @@ enyo.kind({
 
     published: {
         queue: null,
-        playlists:[],
+        playlists: [],
         prioSupport: null
     },
 
@@ -52,7 +52,7 @@ enyo.kind({
             {name: "mainPane", kind: enyo.Pane, flex: 1, onSelectView: "mainPaneSelected", components: [
                 {kind: "MPC.Queue", onPlay: "doPlayById", onPlayNext: "doPlayNext"},
                 {kind: "MPC.Playlists", onLoad: "loadPlaylist"},
-                {kind: "MPC.SleepSettings", onSleepChanged: "doSleepChanged"}
+                {kind: "MPC.SleepSettings", onSleepChanged: "sleepChanged"}
             ]},
             {kind: "MPC.Controls", onPlay: "doPlay", onPause: "doPause", onStop: "stop",
              onNext: "doNext", onVolumeChanged: "doSetVolumeByApp"}
@@ -142,10 +142,6 @@ enyo.kind({
         this.$.queue.setQuery(query);
     },
 
-    resetSleep: function () {
-        this.$.sleepSettings.resetSleep();
-    },
-
     queueChanged: function () {
         this.$.queue.setData(this.queue);
     },
@@ -156,6 +152,12 @@ enyo.kind({
 
     playlistsChanged: function () {
         this.$.playlists.setData(this.playlists);
+    },
+
+    sleepChanged: function (sender, seconds) {
+        this.doSleepChanged(seconds);
+        this.showQueue();
+        this.doRepeatChanged(false);
     }
 
 });

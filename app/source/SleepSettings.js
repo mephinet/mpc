@@ -24,9 +24,6 @@ enyo.kind({
     crop: function (sender) {
         var s = this.$.minutes.getValue() * 60;
         this.doSleepChanged(s);
-    },
-
-    resetSleep: function () {
-        this.$.button.setState(false);
     }
+
 });

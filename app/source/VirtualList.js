@@ -1,3 +1,4 @@
+/*jslint onevar: false */
 /*global enyo */
 enyo.kind({
     name: "MPC.VirtualList",

@@ -119,7 +119,9 @@ bool pgmpc_reduce_queue(pgmpc* this, int* ids) {
     mpd_send_move_id(this->connection, ids[i], i);
   }
 
-  mpd_send_delete_range(this->connection, i, (unsigned) -1);
+  if (this->queue_length > i) {
+    mpd_send_delete_range(this->connection, i, RANGE_END);
+  }
   mpd_command_list_end(this->connection);
   mpd_response_finish(this->connection);
 
