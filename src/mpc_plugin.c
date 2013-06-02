@@ -124,6 +124,7 @@ void handle_event(SDL_Event* event, pgmpc* mpc) {
     }
     free(host); host = NULL;
     free(portp); portp = NULL;
+    queue_version = 0;
     update_playlists(mpc);
     break;
   case EVENT_CODE_PLAY:
@@ -209,6 +210,7 @@ void handle_event(SDL_Event* event, pgmpc* mpc) {
       pgmpc_clear_error();
     }
     free(playlist); playlist = NULL;
+    queue_version = 0;
     break;
   case EVENT_CODE_REDUCE_QUEUE:
     if(!reduce_queue(mpc, id_json)) {
