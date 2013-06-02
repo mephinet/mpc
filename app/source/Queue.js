@@ -56,10 +56,12 @@ enyo.kind({
 
     primaryButtonClicked: function (sender, event) {
         this.doPlay(this.filteredData[this.currentlySelected].songid);
+        return true;
     },
 
     extraButtonClicked: function (sender, event) {
         this.doPlayNext(this.filteredData[this.currentlySelected].songid);
+        return true;
     },
 
     currentSongIdChanged: function (oldSongId) {

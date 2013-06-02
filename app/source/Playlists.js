@@ -15,5 +15,6 @@ enyo.kind({
 
     primaryButtonClicked: function (sender, event) {
         this.doLoad(this.data[this.currentlySelected].path);
+        return true;
     }
 });
