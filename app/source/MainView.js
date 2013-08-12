@@ -4,6 +4,7 @@
 enyo.kind({
     name: "MPC.MainView",
     kind: enyo.SlidingPane,
+    multiViewMinWidth: 320,
 
     published: {
         queue: null,
@@ -28,6 +29,7 @@ enyo.kind({
     },
 
     components: [
+        {kind: enyo.ApplicationEvents, onBack: "goBack"},
         {name: "left", width: '320px', components: [
             {kind: enyo.Group, defaultKind: enyo.Item, components: [
                 {name: "queueButton", className: "enyo-item-selected", content: $L("Queue"), onclick: "showQueue"},
@@ -60,9 +62,23 @@ enyo.kind({
     ],
 
     lastSong: null,
+    queueFirstTime: true,
+
+    goBack: function(inSender, inEvent) {
+        this.back(inEvent);
+        inEvent.stopPropagation();
+    },
 
     rendered: function () {
         this.inherited(arguments);
+
+		if (screen.width <= 640) {
+			// block orientation on phones
+			enyo.setAllowedOrientation("up");
+            // also, remove the selection class on the Queue item, the
+            // user won't see it on a phone at first start
+            this.$.queueButton.setClassName("enyo-item");
+        }
 
         if (!enyo.fetchDeviceInfo()) {
             // running in a browser - create dummy queue
@@ -72,12 +88,18 @@ enyo.kind({
             }
             this.$.queue.setData(p);
             this.$.playlists.setData([{path: "foo"}, {path: "bar"}, {path: "baz"}]);
-            this.$.statusHeader.setStatus("Current Artist - Current Song");
+            this.$.statusHeader.setStatus("Current Artist", "Current Song");
             this.$.statusHeader.setProgress(80);
         }
     },
 
     showQueue: function () {
+        if (this.queueFirstTime) {
+            // hack to get the enyo item as selected the first time
+            // we select it on phones
+            this.$.queueButton.setClassName("enyo-item enyo-item-selected");
+            this.queueFirstTime = false;
+        }
         this.$.mainPane.selectViewByName("queue");
         this.$.statusHeader.showSearch(true);
     },
@@ -93,6 +115,10 @@ enyo.kind({
     },
 
     mainPaneSelected: function (sender, newView, oldView) {
+		if (screen.width <= 640) {
+			// ensure we slide the right view on phones
+			this.selectViewByName("right");
+		}
         this.$[oldView.getName() + "Button"].removeClass("enyo-item-selected");
         this.$[newView.getName() + "Button"].addClass("enyo-item-selected");
     },
@@ -102,18 +128,19 @@ enyo.kind({
         this.$.controls.setVolumeByRemote(status.volume);
         this.$.controls.setPlaying(status.state && (status.state === "play"));
 
-        var s;
+        var a, s;
         if (status.artist && status.title) {
-            s = status.artist + " - " + status.title;
+            a = status.artist
+            s = status.title;
         } else {
             s = status.filename;
         }
-        this.$.statusHeader.setStatus(s);
+        this.$.statusHeader.setStatus(a, s);
         this.$.random.setState(!!status.random);
         this.$.repeat.setState(!!status.repeat);
 
         if (status.state && (status.state === "play") && (s !== this.lastSong)) {
-            this.doNewSong(s);
+            this.doNewSong(a + " - " + s);
             this.lastSong = s;
         }
 
@@ -125,7 +152,8 @@ enyo.kind({
     },
 
     updateStatusWithError: function (error) {
-        this.$.statusHeader.setError($L(error));
+        error = $L(error).split(":");
+        this.$.statusHeader.setError(error[0], error[1]);
     },
 
     stop: function () {

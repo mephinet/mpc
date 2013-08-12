@@ -16,32 +16,38 @@ enyo.kind({
     components: [
         {kind: enyo.VFlexBox, flex: 1, components: [
             {kind: enyo.HFlexBox, components: [
-                {name: "currentStatus", className: "status"},
-                {kind: enyo.Spacer},
+                {name: "currentStatus", className: "status", style: "font-size: 1.0em; font-weight:bold"},
+                {kind: enyo.Spacer, name: "statusSpacer"},
                 {kind: enyo.Button, name: "reconnectButton", label: $L("Reconnect"),
                  onclick: "doReconnect", showing: false},
 
                 {kind: "MPC.SearchInput", onSearch: "doSearch"}
             ]},
+            {name: "currentStatusSong", className: "statusSong", style: "font-size: 0.9em"},
             {name: "progress", className: "progress", kind: enyo.ProgressBar}
         ]}
     ],
 
-    setStatus: function (s) {
-        this.setStatusError(s, 0);
+    setStatus: function (a, s) {
+        this.setStatusError(a, s, 0);
     },
     
-    setError: function (s) {
-        this.setStatusError(s, 1);
+    setError: function (type, desc) {
+        this.setStatusError(type, desc, 1);
     },
 
-    setStatusError: function (s, error) {
-        this.$.currentStatus.setContent(s);
+    setStatusError: function (a, s, error) {
+        this.$.currentStatus.setContent(a);
+        if (s) {
+            this.$.currentStatusSong.setContent(s);
+        }
         this.addRemoveClass("error", error);
         this.$.reconnectButton.setShowing(error);
         this.$.progress.setShowing(!error);
         if (error) {
             this.$.searchInput.hide();
+        } else {
+            this.$.searchInput.show();
         }
     },
 
