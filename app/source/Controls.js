@@ -16,23 +16,31 @@ enyo.kind({
     },
 
     components: [
-        {kind: enyo.GrabButton},
+        {kind: enyo.GrabButton, name: "controlsGrab"},
+        {kind: enyo.Spacer, name: "controlsSpacer"},
+
+        {name: "playButton", icon: "images/btn_play.png", onclick: "play"},
+        {name: "pauseButton", icon: "images/btn_pause.png", onclick: "pause", showing: false},
+        {name: "stopButton", icon: "images/btn_stop.png", onclick: "stop"},
+        {name: "nextButton", icon: "images/btn_next.png", onclick: "doNext"},
+
         {kind: enyo.Spacer},
 
-        {name: "playButton", caption: $L("play"), onclick: "play"},
-        {name: "pauseButton", caption: $L("pause"), onclick: "pause", showing: false},
-        {name: "stopButton", caption: $L("stop"), onclick: "stop"},
-        {name: "nextButton", caption: $L("next"), onclick: "doNext"},
-
-        {kind: enyo.Spacer},
-
-        {caption: $L("mute"), onclick: "mute"},
+        {icon: "images/btn_mute.png", onclick: "mute"},
         {kind: enyo.Slider, className: "volumeSlider", name: "volume",
          onChanging: "volumeSliderMoving", onChange: "volumeSliderMoved",
          minimum: 0, maximum: 100, position: 10}
     ],
 
     ignoreRemoteVolumeChanges: false,
+
+    ready: function() {
+        if (screen.width <= 640) {
+			// hide spacer on phones
+            this.$.controlsGrab.hide();
+            this.$.controlsSpacer.hide();
+        }
+    },
 
     play: function () {
         this.setPlaying(true);

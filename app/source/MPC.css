@@ -7,11 +7,19 @@
 .progress {margin-top: 10px}
 
 .mpc-about {width: 75%}
+.enyo-popup > * { height:100%; }
 .mpc-about .icon {margin-right: 20px}
 .mpc-about .title {font-size: larger; font-weight: bold}
 .mpc-about .copyright {margin: 15px}
 .mpc-about .info {margin: 15px}
 .mpc-about .licenseInfo {font-size: smaller; margin: 15px; text-align: justify}
+
+.mpc-about-phones.enyo-popup > * { height:100%; }
+.mpc-about-phones .icon {margin-right: 0px}
+.mpc-about-phones .title {font-weight: bold;}
+.mpc-about-phones .copyright {margin: 0px;}
+.mpc-about-phones .info {margin: 0px;}
+.mpc-about-phones .licenseInfo {font-size: smaller; margin: 15px; text-align: justify}
 
 .mpc-prefs .saveButton {width: 300px}
 .mpc-prefs .box-center {width: 500px; margin: 23px auto 0}
@@ -22,6 +30,10 @@
 
 .mpc-search .input {
     width: 200px;
+}
+
+.mpc-search .input-phones {
+    width: 300px;
 }
 
 .mpc-search .input .close {

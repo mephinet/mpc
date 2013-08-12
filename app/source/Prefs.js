@@ -20,7 +20,7 @@ enyo.kind({
             {kind: enyo.Control, content: $L("Preferences")}
         ]},
         {kind: enyo.Scroller, flex: 1, components: [
-            {kind: enyo.Control, className: "box-center", components: [
+            {kind: enyo.Control, name: "centerControl", className: "box-center", components: [
                 {kind: enyo.RowGroup, caption: $L("Hostname or IP Address"), components: [
                     {name: "host", kind: enyo.Input}
                 ]},
@@ -55,6 +55,12 @@ enyo.kind({
         this.inherited(arguments);
         var info = enyo.fetchAppInfo();
         this.$.toolbarImage.setSrc(info.icon);
+        
+        if (screen.width <= 640) {
+			// fine-tuning for little screens
+            this.$.centerControl.setClassName("");
+            this.$.saveButton.setClassName("enyo-button enyo-button-affirmative");
+        }
     },
 
     loadPrefs: function () {
