@@ -165,5 +165,11 @@ int register_callbacks(void) {
   if(PDL_JSRegistrationComplete() != PDL_NOERROR) {
     return 0;
   }
+
+  // http://forums.webosnation.com/archive/index.php?t-321384.html
+  const char *params[1];
+  params[0] = "ready";
+  PDL_CallJS("__PDL_PluginStatusChange__", params, 1);
+  
   return 1;
 }
