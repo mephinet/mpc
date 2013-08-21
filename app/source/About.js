@@ -10,7 +10,7 @@ enyo.kind({
         {layoutKind: "VFlexLayout", flex: 1, style: "height: 300px;", components: [
             {kind: "Scroller", autoHorizontal: false, horizontal: false, flex: 1, components: [
                 {kind: enyo.HFlexBox, pack: "center", components: [
-                    {kind: enyo.Image, name: "aboutIcon", className: "icon", src: "images/icon_64x64.png"},
+                    {kind: enyo.Image, name: "aboutIcon", className: "icon hide-on-phones", src: "images/icon_64x64.png"},
                     {kind: enyo.VFlexBox, components: [
                         {name: "title", className: "title"},
                         {name: "copyright", className: "copyright"}
@@ -26,9 +26,8 @@ enyo.kind({
     rendered: function () {
         this.inherited(arguments);
 
-		if (screen.width <= 640) {
-            this.$.aboutIcon.hide();
-			this.setClassName("enyo-popup mpc-about-phones");
+	if (window.innerWidth <= 640) {
+	    this.setClassName("enyo-popup mpc-about-phones");
         }
 
         var info = enyo.fetchAppInfo();

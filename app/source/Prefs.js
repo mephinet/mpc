@@ -56,8 +56,8 @@ enyo.kind({
         var info = enyo.fetchAppInfo();
         this.$.toolbarImage.setSrc(info.icon);
         
-        if (screen.width <= 640) {
-			// fine-tuning for little screens
+        if (window.innerWidth <= 640) {
+	    // fine-tuning for little screens
             this.$.centerControl.setClassName("");
             this.$.saveButton.setClassName("enyo-button enyo-button-affirmative");
         }

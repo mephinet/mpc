@@ -42,3 +42,9 @@
         width:24px;
         margin-right:-5px;
 }
+
+@media screen and (max-width: 640px) {
+    .hide-on-phones {
+        display: none;
+    }
+}

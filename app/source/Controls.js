@@ -16,8 +16,8 @@ enyo.kind({
     },
 
     components: [
-        {kind: enyo.GrabButton, name: "controlsGrab"},
-        {kind: enyo.Spacer, name: "controlsSpacer"},
+        {kind: enyo.GrabButton, className: "hide-on-phones"},
+        {kind: enyo.Spacer, className: "hide-on-phones"},
 
         {name: "playButton", icon: "images/btn_play.png", onclick: "play"},
         {name: "pauseButton", icon: "images/btn_pause.png", onclick: "pause", showing: false},
@@ -33,14 +33,6 @@ enyo.kind({
     ],
 
     ignoreRemoteVolumeChanges: false,
-
-    ready: function() {
-        if (screen.width <= 640) {
-			// hide spacer on phones
-            this.$.controlsGrab.hide();
-            this.$.controlsSpacer.hide();
-        }
-    },
 
     play: function () {
         this.setPlaying(true);

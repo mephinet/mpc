@@ -72,9 +72,9 @@ enyo.kind({
     rendered: function () {
         this.inherited(arguments);
 
-		if (screen.width <= 640) {
-			// block orientation on phones
-			enyo.setAllowedOrientation("up");
+	if (window.innerWidth <= 640) {
+	    // block orientation on phones
+	    enyo.setAllowedOrientation("up");
             // also, remove the selection class on the Queue item, the
             // user won't see it on a phone at first start
             this.$.queueButton.setClassName("enyo-item");
@@ -115,10 +115,10 @@ enyo.kind({
     },
 
     mainPaneSelected: function (sender, newView, oldView) {
-		if (screen.width <= 640) {
-			// ensure we slide the right view on phones
-			this.selectViewByName("right");
-		}
+	if (window.innerWidth <= 640) {
+	    // ensure we slide the right view on phones
+	    this.selectViewByName("right");
+	}
         this.$[oldView.getName() + "Button"].removeClass("enyo-item-selected");
         this.$[newView.getName() + "Button"].addClass("enyo-item-selected");
     },

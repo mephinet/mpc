@@ -23,8 +23,8 @@ enyo.kind({
     ],
     
     ready: function() {
-		if (screen.width <= 640) {
-			// ensure the search box expands...
+	if (window.innerWidth <= 640) {
+	    // ensure the search box expands...
             // FIXME: this works on the pre3, but on other phones?
             this.$.input.setStyle("width: 300px;");
             this.$.input.hide();
@@ -37,11 +37,11 @@ enyo.kind({
     },
    
     showInput: function () {
-		if (screen.width <= 640) {
-			// hide song title on phones
+	if (window.innerWidth <= 640) {
+	    // hide song title on phones
             this.owner.$.statusSpacer.hide();
             this.owner.$.currentStatusSong.hide();
-			this.owner.$.currentStatus.hide();
+	    this.owner.$.currentStatus.hide();
         }
 
         this.$.button.hide();
@@ -56,13 +56,12 @@ enyo.kind({
         this.$.input.setValue("");
         this.doSearch("");
 
-		if (screen.width <= 640) {
-			// restore song title on phones
+	if (window.innerWidth <= 640) {
+	    // restore song title on phones
             this.owner.$.statusSpacer.show();
             this.owner.$.currentStatusSong.show();
-			this.owner.$.currentStatus.show();
+	    this.owner.$.currentStatus.show();
         }
-
     }
     
 });
