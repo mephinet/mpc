@@ -119,7 +119,7 @@ enyo.kind({
 	    // ensure we slide the right view on phones
 	    this.selectViewByName("right");
 	}                       
-        this.$[oldView.getName() + "Button"].removeClass("enyo-item-selected");
+        if (oldView) this.$[oldView.getName() + "Button"].removeClass("enyo-item-selected");
         this.$[newView.getName() + "Button"].addClass("enyo-item-selected");
     },
 

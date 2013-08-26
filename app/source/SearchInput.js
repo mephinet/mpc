@@ -23,5 +23,13 @@ enyo.kind({
     inputChanged: function () {
         var txt = this.$.input.getValue();
         this.doSearch(txt);
+    },
+
+    forceFocus: function () {
+        this.$.input.forceFocus();
+    },
+
+    clear: function () {
+        this.$.input.setValue("");
     }
 });

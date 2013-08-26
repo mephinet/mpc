@@ -67,11 +67,13 @@ enyo.kind({
 
     showSearchInput: function () {
         this.searchInputOpen = true;
+        this.$.searchInput.clear();
         this.updateSearchUI();
     },
 
     hideSearchInput: function () {
         this.searchInputOpen = false;
+        this.doSearch();
         this.updateSearchUI();
     },
 
@@ -80,12 +82,15 @@ enyo.kind({
     },
 
     updateSearchUI: function () {
-        this.$.searchButton.setShowing((!this.error) && this.searchEnabled && !this.searchInputOpen);
-        this.$.searchInput.setShowing((!this.error) && this.searchEnabled && this.searchInputOpen);
-        this.$.currentStatus.addRemoveClass('hide-on-phones', (!this.error) && this.searchEnabled && this.searchInputOpen);
-        this.$.currentStatusSong.addRemoveClass('hide-on-phones', (!this.error) && this.searchEnabled && this.searchInputOpen);
+        var showButton = (!this.error) && this.searchEnabled && !this.searchInputOpen;
+        var showInput = (!this.error) && this.searchEnabled && this.searchInputOpen;
+        this.$.searchButton.setShowing(showButton);
+        this.$.searchInput.setShowing(showInput);
+        this.$.currentStatus.addRemoveClass('hide-on-phones', showInput);
+        this.$.currentStatusSong.addRemoveClass('hide-on-phones', showInput);
         this.$.reconnectButton.setShowing(this.error);
         this.$.progress.setShowing(!this.error);
+        if (showInput) this.$.searchInput.forceFocus();
 
     }
 });
