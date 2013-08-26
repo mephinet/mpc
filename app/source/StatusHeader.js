@@ -5,7 +5,8 @@ enyo.kind({
     className: "enyo-header mpc-status-header",
 
     published: {
-        progress: 0
+        progress: 0,
+        searchEnabled: true
     },
 
     events: {
@@ -16,39 +17,44 @@ enyo.kind({
     components: [
         {kind: enyo.VFlexBox, flex: 1, components: [
             {kind: enyo.HFlexBox, components: [
-                {name: "currentStatus", className: "status", style: "font-size: 1.0em; font-weight:bold"},
+                {name: "currentStatus", className: "status"},
                 {kind: enyo.Spacer, name: "statusSpacer"},
-                {kind: enyo.Button, name: "reconnectButton", label: $L("Reconnect"),
-                 onclick: "doReconnect", showing: false},
 
-                {kind: "MPC.SearchInput", onSearch: "doSearch"}
+                {kind: enyo.Button, name: "reconnectButton", label: $L("Reconnect"), showing: false,
+                 onclick: "doReconnect"},
+
+                {name: "searchButton", kind: "IconButton",
+                 icon: "images/btn_search.png", onclick: "showSearchInput"},
+
+                {kind: "MPC.SearchInput", onSearch: "doSearch", onClose: "hideSearchInput", showing: false}
             ]},
-            {name: "currentStatusSong", className: "statusSong", style: "font-size: 0.9em"},
+            {name: "currentStatusSong", className: "statusSong"},
             {name: "progress", className: "progress", kind: enyo.ProgressBar}
         ]}
     ],
 
+    searchInputOpen: false,
+    error: false,
+
+    rendered: function () {
+        this.inherited(arguments);
+        this.updateSearchUI();
+    },
+
     setStatus: function (a, s) {
         this.setStatusError(a, s, 0);
     },
-    
+
     setError: function (type, desc) {
         this.setStatusError(type, desc, 1);
     },
 
     setStatusError: function (a, s, error) {
         this.$.currentStatus.setContent(a);
-        if (s) {
-            this.$.currentStatusSong.setContent(s);
-        }
+        this.$.currentStatusSong.setContent(s);
+        this.error = error;
         this.addRemoveClass("error", error);
-        this.$.reconnectButton.setShowing(error);
-        this.$.progress.setShowing(!error);
-        if (error) {
-            this.$.searchInput.hide();
-        } else {
-            this.$.searchInput.show();
-        }
+        this.updateSearchUI();
     },
 
     progressChanged: function () {
@@ -59,8 +65,27 @@ enyo.kind({
         this.$.progress.setPositionImmediate(0);
     },
 
-    showSearch: function (showing) {
-        this.$.searchInput.setShowing(showing);
-    }
+    showSearchInput: function () {
+        this.searchInputOpen = true;
+        this.updateSearchUI();
+    },
 
+    hideSearchInput: function () {
+        this.searchInputOpen = false;
+        this.updateSearchUI();
+    },
+
+    searchEnabledChanged: function () {
+        this.updateSearchUI();
+    },
+
+    updateSearchUI: function () {
+        this.$.searchButton.setShowing((!this.error) && this.searchEnabled && !this.searchInputOpen);
+        this.$.searchInput.setShowing((!this.error) && this.searchEnabled && this.searchInputOpen);
+        this.$.currentStatus.addRemoveClass('hide-on-phones', (!this.error) && this.searchEnabled && this.searchInputOpen);
+        this.$.currentStatusSong.addRemoveClass('hide-on-phones', (!this.error) && this.searchEnabled && this.searchInputOpen);
+        this.$.reconnectButton.setShowing(this.error);
+        this.$.progress.setShowing(!this.error);
+
+    }
 });

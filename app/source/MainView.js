@@ -101,24 +101,24 @@ enyo.kind({
             this.queueFirstTime = false;
         }
         this.$.mainPane.selectViewByName("queue");
-        this.$.statusHeader.showSearch(true);
+        this.$.statusHeader.setSearchEnabled(true);
     },
 
     showPlaylists: function () {
         this.$.mainPane.selectViewByName("playlists");
-        this.$.statusHeader.showSearch(false);
+        this.$.statusHeader.setSearchEnabled(false);
     },
 
     showSleepSettings: function () {
         this.$.mainPane.selectViewByName("sleepSettings");
-        this.$.statusHeader.showSearch(false);
+        this.$.statusHeader.setSearchEnabled(false);
     },
 
     mainPaneSelected: function (sender, newView, oldView) {
 	if (window.innerWidth <= 640) {
 	    // ensure we slide the right view on phones
 	    this.selectViewByName("right");
-	}
+	}                       
         this.$[oldView.getName() + "Button"].removeClass("enyo-item-selected");
         this.$[newView.getName() + "Button"].addClass("enyo-item-selected");
     },

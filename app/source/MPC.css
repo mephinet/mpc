@@ -6,27 +6,22 @@
 
 .progress {margin-top: 10px}
 
-.mpc-about {width: 75%}
-.enyo-popup > * { height:100%; }
-.mpc-about .icon {margin-right: 20px}
-.mpc-about .title {font-size: larger; font-weight: bold}
-.mpc-about .copyright {margin: 15px}
-.mpc-about .info {margin: 15px}
+.mpc-about {width: 75%; height: 60%; min-height: 400px;}
 .mpc-about .licenseInfo {font-size: smaller; margin: 15px; text-align: justify}
 
-.mpc-about-phones.enyo-popup > * { height:100%; }
-.mpc-about-phones .icon {margin-right: 0px}
-.mpc-about-phones .title {font-weight: bold;}
-.mpc-about-phones .copyright {margin: 0px;}
-.mpc-about-phones .info {margin: 0px;}
-.mpc-about-phones .licenseInfo {font-size: smaller; margin: 15px; text-align: justify}
+@media screen and (min-width: 640px) {
+    .mpc-about .icon {margin-right: 20px}
+    .mpc-about .title {font-size: larger; font-weight: bold}
+    .mpc-about .copyright {margin: 15px}
+    .mpc-about .info {margin: 15px}
+}
 
-.mpc-prefs .saveButton {width: 300px}
-.mpc-prefs .box-center {width: 500px; margin: 23px auto 0}
+.mpc-prefs .saveButton {width: 40%}
+.mpc-prefs .box-center {width: 100%; max-width: 500px; margin: 23px auto 0}
 
-.mpc-status-header {min-height: 76px}
-
-.mpc-status-header .status {min-height: 38px}
+.mpc-status-header {min-height: 77px}
+.mpc-status-header .status {min-height: 42px; font-size: 1.0em; font-weight:bold}
+.mpc-status-header .statusSong {font-size: 0.9em}
 
 .mpc-search .input {
     width: 200px;
