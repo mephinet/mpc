@@ -1,4 +1,4 @@
-.volumeSlider {width: 20%; margin-right: 5px}
+.volumeSlider {width: 20%; min-width: 90px; margin-right: 5px}
 
 .playing {background-color: #E8E8E8}
 
