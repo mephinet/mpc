@@ -6,7 +6,7 @@ enyo.kind({
 
     events: {
         onSearch: "",
-        onClose: "",
+        onClose: ""
     },
 
     components: [

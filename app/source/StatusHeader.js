@@ -1,4 +1,6 @@
 /*global enyo, $L */
+/*jslint onevar: false */
+
 enyo.kind({
     name: "MPC.StatusHeader",
     kind: enyo.PageHeader,
@@ -91,7 +93,8 @@ enyo.kind({
         this.$.currentStatusSong.addRemoveClass('hide-on-phones', showInput);
         this.$.reconnectButton.setShowing(this.error);
         this.$.progress.setShowing(!this.error);
-        if (showInput) this.$.searchInput.forceFocus();
-
+        if (showInput) {
+            this.$.searchInput.forceFocus();
+        }
     }
 });

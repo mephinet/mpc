@@ -1,5 +1,5 @@
 /*jslint plusplus: false */
-/*global enyo, $L, close */
+/*global enyo, $L, close, window */
 
 enyo.kind({
     name: "MPC.MainView",
@@ -64,7 +64,7 @@ enyo.kind({
     lastSong: null,
     queueFirstTime: true,
 
-    goBack: function(inSender, inEvent) {
+    goBack: function (inSender, inEvent) {
         this.back(inEvent);
         inEvent.stopPropagation();
     },
@@ -72,9 +72,9 @@ enyo.kind({
     rendered: function () {
         this.inherited(arguments);
 
-	if (window.innerWidth <= 640) {
-	    // block orientation on phones
-	    enyo.setAllowedOrientation("up");
+        if (window.innerWidth <= 640) {
+            // block orientation on phones
+            enyo.setAllowedOrientation("up");
             // also, remove the selection class on the Queue item, the
             // user won't see it on a phone at first start
             this.$.queueButton.setClassName("enyo-item");
@@ -115,11 +115,13 @@ enyo.kind({
     },
 
     mainPaneSelected: function (sender, newView, oldView) {
-	if (window.innerWidth <= 640) {
-	    // ensure we slide the right view on phones
-	    this.selectViewByName("right");
-	}                       
-        if (oldView) this.$[oldView.getName() + "Button"].removeClass("enyo-item-selected");
+        if (window.innerWidth <= 640) {
+            // ensure we slide the right view on phones
+            this.selectViewByName("right");
+        }
+        if (oldView) {
+            this.$[oldView.getName() + "Button"].removeClass("enyo-item-selected");
+        }
         this.$[newView.getName() + "Button"].addClass("enyo-item-selected");
     },
 
@@ -130,7 +132,7 @@ enyo.kind({
 
         var a, s;
         if (status.artist && status.title) {
-            a = status.artist
+            a = status.artist;
             s = status.title;
         } else {
             s = status.filename;
