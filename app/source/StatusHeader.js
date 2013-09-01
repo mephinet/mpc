@@ -18,7 +18,8 @@ enyo.kind({
         {kind: enyo.VFlexBox, flex: 1, components: [
             {kind: enyo.HFlexBox, components: [
                 {name: "currentStatus", className: "status"},
-                {kind: enyo.Spacer, name: "statusSpacer"},
+
+                {kind: enyo.Spacer, flex: 0.1},
 
                 {kind: enyo.Button, name: "reconnectButton", label: $L("Reconnect"), showing: false,
                  onclick: "doReconnect"},
@@ -26,7 +27,7 @@ enyo.kind({
                 {name: "searchButton", kind: "IconButton",
                  icon: "images/btn_search.png", onclick: "showSearchInput"},
 
-                {kind: "MPC.SearchInput", onSearch: "doSearch", onClose: "hideSearchInput", showing: false}
+                {kind: "MPC.SearchInput", flex: 1, onSearch: "doSearch", onClose: "hideSearchInput", showing: false}
             ]},
             {name: "currentStatusSong", className: "statusSong"},
             {name: "progress", className: "progress", kind: enyo.ProgressBar}

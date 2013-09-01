@@ -1,7 +1,7 @@
 /*global enyo */
 enyo.kind({
     name: "MPC.SearchInput",
-    kind: "enyo.Control",
+    kind: "enyo.HFlexBox",
     className: "mpc-search",
 
     events: {
