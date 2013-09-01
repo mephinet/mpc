@@ -1,4 +1,4 @@
-AC_INIT([mpc], [1.1])
+AC_INIT([mpc], [1.1.0])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/pgmpc.c])
 AC_CONFIG_HEADERS([config.h])

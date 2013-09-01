@@ -30,10 +30,12 @@ enyo.kind({
             {caption: $L("Preferences"), onclick: "showPrefs"},
             {caption: $L("About..."), onclick: "showAbout"}
         ]},
-        {kind: "MPC.About"}
+        {kind: "MPC.About"},
+        {kind: enyo.ApplicationEvents, onWindowDeactivated: "deactivated", onWindowActivated: "activated"}
     ],
 
     status: null,
+    window_activated: 1,
 
     pluginReady: function () {
         this.log("plugin is ready!");
@@ -175,7 +177,9 @@ enyo.kind({
     },
 
     newSong: function (sender, title) {
-        enyo.windows.addBannerMessage(title, "{}");
+        if (!this.window_activated) {
+            enyo.windows.addBannerMessage(title, "{}");
+        }
     },
 
     pluginDied: function () {
@@ -191,5 +195,13 @@ enyo.kind({
     errorButtonClicked: function () {
         this.$.errorDialog.close();
         close();
+    },
+
+    activated: function () {
+        this.window_activated = 1;
+    },
+    
+    deactivated: function () {
+        this.window_activated = 0;
     }
 });
